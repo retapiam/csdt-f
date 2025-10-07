@@ -1,0 +1,446 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import './styles/GlobalStyles.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset CSS personalizado para evitar conflictos */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 217 91% 60%;
+    --radius: 0.75rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 217 91% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  #root {
+    min-height: 100vh;
+    width: 100%;
+  }
+}
+
+@layer components {
+  /* Estilos personalizados para el proyecto CSDT */
+  .consejo-social {
+    font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .card-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .btn-primary {
+    @apply bg-consejo-600 text-white px-6 py-3 rounded-lg hover:bg-consejo-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-silver-200 text-silver-800 px-6 py-3 rounded-lg hover:bg-silver-300 transition-all duration-300 font-medium;
+  }
+
+  .btn-gold {
+    @apply bg-gold-500 text-white px-6 py-3 rounded-lg hover:bg-gold-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl;
+  }
+
+  .btn-diamond {
+    @apply bg-diamond-500 text-white px-6 py-3 rounded-lg hover:bg-diamond-600 transition-all duration-300 font-medium shadow-lg hover:shadow-xl;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-diamond {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Estilos específicos del proyecto CSDT */
+  .consejo-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  }
+
+  .consejo-card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 backdrop-blur-sm;
+  }
+
+  .consejo-card-dark {
+    @apply bg-gray-800 rounded-xl shadow-lg border border-gray-700 hover:shadow-xl transition-all duration-300 backdrop-blur-sm;
+  }
+
+  .consejo-button {
+    @apply bg-consejo-600 text-white px-6 py-3 rounded-lg hover:bg-consejo-700 transition-all duration-300 font-medium shadow-lg hover:shadow-xl;
+  }
+
+  .consejo-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-consejo-500 focus:border-transparent transition-all duration-300;
+  }
+
+  .consejo-input-dark {
+    @apply w-full px-4 py-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-consejo-500 focus:border-transparent transition-all duration-300 bg-gray-700 text-white;
+  }
+
+  /* Efectos de neón */
+  .neon-blue {
+    box-shadow: 0 0 5px #00f5ff, 0 0 10px #00f5ff, 0 0 15px #00f5ff;
+  }
+
+  .neon-green {
+    box-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14, 0 0 15px #39ff14;
+  }
+
+  .neon-pink {
+    box-shadow: 0 0 5px #ff10f0, 0 0 10px #ff10f0, 0 0 15px #ff10f0;
+  }
+
+  .neon-purple {
+    box-shadow: 0 0 5px #bf00ff, 0 0 10px #bf00ff, 0 0 15px #bf00ff;
+  }
+
+  .neon-yellow {
+    box-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00, 0 0 15px #ffff00;
+  }
+
+  /* Efectos de cristal */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-effect-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Efectos de partículas */
+  .particles-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Estilos para App.jsx - Reemplazar estilos inline */
+  .app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-main {
+    flex: 1;
+    margin-top: 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .error-boundary {
+    padding: 20px;
+    text-align: center;
+    background-color: #ffe0e0;
+    color: #d32f2f;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .error-boundary h1 {
+    color: #d32f2f;
+    margin-bottom: 20px;
+  }
+
+  .error-boundary p {
+    font-size: 1.1em;
+    color: #d32f2f;
+  }
+
+  .error-details {
+    margin-top: 20px;
+    text-align: left;
+    background-color: #f8d7da;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+  }
+
+  .error-details summary {
+    font-weight: bold;
+    cursor: pointer;
+    color: #721c24;
+  }
+
+  .error-details pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 0.9em;
+    color: #721c24;
+  }
+
+  .generic-test-page {
+    padding: 40px;
+    text-align: center;
+    background-color: #f0f9ff;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .generic-test-page h1 {
+    color: #0ea5e9;
+    margin-bottom: 20px;
+  }
+
+  .generic-test-page p {
+    font-size: 1.1em;
+    color: #334155;
+  }
+
+  .generic-test-page .subtitle {
+    font-size: 0.9em;
+    color: #64748b;
+    margin-top: 15px;
+  }
+
+  .system-diagnostic {
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .system-diagnostic h1 {
+    margin-bottom: 20px;
+  }
+
+  .system-diagnostic ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .system-diagnostic li {
+    margin: 10px 0;
+  }
+
+  .system-diagnostic h2 {
+    color: #28a745;
+  }
+
+  .system-diagnostic .description {
+    font-size: 16px;
+    color: #555;
+  }
+
+  .loading-fallback {
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: #007bff;
+  }
+
+  /* Asegurar que el menú principal esté siempre por encima */
+  .consejo-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 99999 !important;
+    isolation: isolate !important;
+  }
+
+  /* Asegurar que el header del menú principal sea visible */
+  header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 99999 !important;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%) !important;
+    color: white !important;
+    padding: 15px 0 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    border-bottom: 3px solid #3498db !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 70px !important;
+  }
+
+  /* Asegurar que el contenido principal esté debajo del menú */
+  main {
+    margin-top: 100px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  /* Estilos del body y root ya definidos en @layer base */
+
+  /* Asegurar que el dropdown del menú esté por encima de todo */
+  .menu-dropdown {
+    z-index: 100002 !important;
+    position: absolute !important;
+    isolation: isolate !important;
+  }
+
+  /* Asegurar que el botón del menú esté por encima */
+  .menu-button {
+    position: relative !important;
+    z-index: 100001 !important;
+    isolation: isolate !important;
+  }
+
+  /* Asegurar que el contenido de las páginas esté por debajo del menú */
+  main {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Asegurar que todas las páginas estén por debajo del menú */
+  .page-content {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .particles-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  /* Animaciones personalizadas */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+  to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

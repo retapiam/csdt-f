@@ -1,0 +1,183 @@
+{
+  "version": "1.0.0",
+  "descripcion": "Configuración de optimizaciones con IA para el sistema de justicia",
+  "fechaCreacion": "2024-01-15",
+  "optimizaciones": {
+    "rendimiento": {
+      "habilitado": true,
+      "lazyLoading": {
+        "habilitado": true,
+        "umbralTamaño": 10000,
+        "componentesExcluidos": ["Inicio", "Institucional"]
+      },
+      "codeSplitting": {
+        "habilitado": true,
+        "estrategia": "porRuta",
+        "chunksMaximos": 10
+      },
+      "memoizacion": {
+        "habilitado": true,
+        "componentesPesados": true,
+        "hooksPersonalizados": true
+      },
+      "virtualizacion": {
+        "habilitado": true,
+        "listasGrandes": 100,
+        "tablasGrandes": 50
+      }
+    },
+    "accesibilidad": {
+      "habilitado": true,
+      "ariaLabels": {
+        "habilitado": true,
+        "botones": true,
+        "enlaces": true,
+        "formularios": true
+      },
+      "navegacionTeclado": {
+        "habilitado": true,
+        "tabIndex": true,
+        "shortcuts": true
+      },
+      "contrasteColores": {
+        "habilitado": true,
+        "nivel": "AA",
+        "verificacionAutomatica": true
+      },
+      "lectoresPantalla": {
+        "habilitado": true,
+        "altText": true,
+        "ariaDescribedBy": true
+      }
+    },
+    "seo": {
+      "habilitado": true,
+      "metaTags": {
+        "habilitado": true,
+        "titulos": true,
+        "descripciones": true,
+        "keywords": true,
+        "openGraph": true
+      },
+      "structuredData": {
+        "habilitado": true,
+        "schemaOrg": true,
+        "jsonLd": true
+      },
+      "sitemap": {
+        "habilitado": true,
+        "frecuencia": "diaria",
+        "prioridad": "alta"
+      },
+      "robotsTxt": {
+        "habilitado": true,
+        "allowAll": true,
+        "sitemapUrl": "/sitemap.xml"
+      }
+    },
+    "ux": {
+      "habilitado": true,
+      "responsiveDesign": {
+        "habilitado": true,
+        "breakpoints": ["320px", "768px", "1024px", "1440px"],
+        "mobileFirst": true
+      },
+      "animaciones": {
+        "habilitado": true,
+        "duracion": "300ms",
+        "easing": "ease-in-out",
+        "reducirMovimiento": true
+      },
+      "feedbackVisual": {
+        "habilitado": true,
+        "loadingStates": true,
+        "errorStates": true,
+        "successStates": true
+      },
+      "navegacionIntuitiva": {
+        "habilitado": true,
+        "breadcrumbs": true,
+        "menuContextual": true,
+        "buscador": true
+      }
+    },
+    "codigo": {
+      "habilitado": true,
+      "typescript": {
+        "habilitado": true,
+        "strictMode": true,
+        "interfaces": true
+      },
+      "eslint": {
+        "habilitado": true,
+        "reglas": "strict",
+        "autoFix": true
+      },
+      "prettier": {
+        "habilitado": true,
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 2
+      },
+      "testing": {
+        "habilitado": true,
+        "unitTests": true,
+        "integrationTests": true,
+        "e2eTests": true
+      }
+    }
+  },
+  "reglasPersonalizadas": {
+    "componentesGrandes": {
+      "maxLineas": 200,
+      "maxComponentes": 5,
+      "accion": "dividir"
+    },
+    "imports": {
+      "maxImports": 10,
+      "ordenarAlfabeticamente": true,
+      "agruparPorTipo": true
+    },
+    "hooks": {
+      "maxHooks": 10,
+      "customHooks": true,
+      "optimizacionAutomatica": true
+    },
+    "estilos": {
+      "noInlineStyles": true,
+      "cssModules": true,
+      "styledComponents": false
+    }
+  },
+  "exclusiones": {
+    "archivos": [
+      "*.test.js",
+      "*.spec.js",
+      "*.stories.js",
+      "index.js"
+    ],
+    "carpetas": [
+      "node_modules",
+      "dist",
+      "build",
+      "coverage"
+    ],
+    "patrones": [
+      "**/vendor/**",
+      "**/third-party/**"
+    ]
+  },
+  "reportes": {
+    "formato": "json",
+    "incluirCodigo": false,
+    "incluirMetricas": true,
+    "incluirRecomendaciones": true,
+    "rutaSalida": "./reportes-ia/"
+  },
+  "notificaciones": {
+    "email": false,
+    "console": true,
+    "archivo": true,
+    "webhook": false
+  }
+}
