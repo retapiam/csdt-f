@@ -263,43 +263,42 @@ class CsdtApiService {
       }
     }
   };
-}
 
   // Método auxiliar para hacer POST genérico
-  post = async (endpoint, data, config = {}) => {
+  async post(endpoint, data, config = {}) {
     try {
       return await api.post(endpoint, data, config);
     } catch (error) {
       throw error;
     }
-  };
+  }
   
   // Método auxiliar para hacer GET genérico
-  get = async (endpoint, config = {}) => {
+  async get(endpoint, config = {}) {
     try {
       return await api.get(endpoint, config);
     } catch (error) {
       throw error;
     }
-  };
+  }
   
   // Método auxiliar para hacer PUT genérico
-  put = async (endpoint, data, config = {}) => {
+  async put(endpoint, data, config = {}) {
     try {
       return await api.put(endpoint, data, config);
     } catch (error) {
       throw error;
     }
-  };
+  }
   
   // Método auxiliar para hacer DELETE genérico
-  delete = async (endpoint, config = {}) => {
+  async delete(endpoint, config = {}) {
     try {
       return await api.delete(endpoint, config);
     } catch (error) {
       throw error;
     }
-  };
+  }
 }
 
 // Instancia singleton
