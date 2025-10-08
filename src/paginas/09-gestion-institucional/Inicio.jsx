@@ -196,13 +196,15 @@ const Inicio = () => {
           Consejo de Veeduría y Desarrollo Territorial
         </h1>
         <p style={{ 
-          fontSize: '1.25rem', 
+          fontSize: '1.35rem', 
           marginBottom: '2rem',
-          opacity: 0.9,
-          maxWidth: '900px',
-          margin: '0 auto 2rem'
+          opacity: 0.95,
+          maxWidth: '1000px',
+          margin: '0 auto 2rem',
+          fontWeight: '500'
         }}>
-          Plataforma integral para la protección de derechos, análisis territorial, desarrollo comunitario y control social
+          Plataforma tecnológica integral con Inteligencia Artificial para la protección de derechos de víctimas, 
+          lucha contra la corrupción, análisis territorial, desarrollo comunitario y control social efectivo
         </p>
         
         {/* Descripción del Proyecto */}
@@ -216,20 +218,72 @@ const Inicio = () => {
           border: '1px solid rgba(255, 255, 255, 0.3)',
           textAlign: 'left'
         }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', marginBottom: '1rem', textAlign: 'center' }}>
-            🏛️ Sobre el Sistema CSDT
+          <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1.5rem', textAlign: 'center' }}>
+            🏛️ Sobre el Sistema CSDT - Consejo de Soluciones y Desarrollo Territorial
           </h2>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', opacity: 0.95, marginBottom: '1rem' }}>
-            El <strong>Sistema CSDT (Consejo de Soluciones y Desarrollo Territorial)</strong> es una plataforma tecnológica 
-            integral diseñada para fortalecer la democracia, el acceso a la justicia y el desarrollo territorial sostenible 
-            en Colombia. Integra <strong>11 módulos especializados con 77 páginas funcionales</strong> que abarcan desde la 
-            protección de derechos fundamentales hasta el análisis territorial con inteligencia artificial.
-          </p>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', opacity: 0.95 }}>
-            Con tecnologías de vanguardia como <strong>Inteligencia Artificial, análisis geográfico avanzado, blockchain para 
-            trazabilidad</strong> y sistemas de <strong>anonimización inteligente</strong>, el sistema facilita la participación 
-            ciudadana, el control social, la veeduría ciudadana y la protección de derechos étnicos y territoriales.
-          </p>
+          
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#fbbf24' }}>
+              📋 ¿Qué es el Sistema CSDT?
+            </h3>
+            <p style={{ fontSize: '1.1rem', lineHeight: '1.9', opacity: 0.95 }}>
+              El <strong>Sistema CSDT (Consejo de Soluciones y Desarrollo Territorial)</strong> es una plataforma tecnológica 
+              integral de última generación diseñada para <strong>fortalecer la democracia, garantizar el acceso efectivo a la justicia, 
+              proteger a las víctimas</strong> y promover el desarrollo territorial sostenible en Colombia. Integra <strong>11 módulos 
+              especializados con 77 páginas funcionales completamente operativas</strong> que abarcan desde la protección de derechos 
+              fundamentales hasta el análisis territorial inteligente con IA avanzada.
+            </p>
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#4ade80' }}>
+              🛡️ Protección de Víctimas y Derechos Fundamentales
+            </h3>
+            <p style={{ fontSize: '1.1rem', lineHeight: '1.9', opacity: 0.95 }}>
+              El sistema está diseñado especialmente para <strong>proteger a víctimas de vulneración de derechos</strong>, ofreciendo:
+            </p>
+            <ul style={{ fontSize: '1.05rem', lineHeight: '1.8', opacity: 0.95, marginLeft: '2rem', marginTop: '0.5rem' }}>
+              <li>✅ <strong>Acciones de tutela automatizadas</strong> para protección inmediata de derechos fundamentales</li>
+              <li>✅ <strong>Asesoría legal gratuita con IA</strong> especializada en casos de víctimas</li>
+              <li>✅ <strong>Protección de identidad</strong> mediante sistemas de anonimización inteligente</li>
+              <li>✅ <strong>Acompañamiento integral</strong> desde la denuncia hasta la reparación</li>
+              <li>✅ <strong>Acceso a justicia especializada</strong> (JEP, jurisdicción indígena, justicia ordinaria)</li>
+              <li>✅ <strong>Seguimiento de casos</strong> con análisis geográfico y temporal</li>
+              <li>✅ <strong>Generación automática de documentos legales</strong> en formatos oficiales</li>
+            </ul>
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#f87171' }}>
+              🚫 Lucha Contra la Corrupción
+            </h3>
+            <p style={{ fontSize: '1.1rem', lineHeight: '1.9', opacity: 0.95 }}>
+              El sistema cuenta con <strong>herramientas avanzadas para detectar, prevenir y denunciar la corrupción</strong>:
+            </p>
+            <ul style={{ fontSize: '1.05rem', lineHeight: '1.8', opacity: 0.95, marginLeft: '2rem', marginTop: '0.5rem' }}>
+              <li>✅ <strong>5 tipos de veeduría ciudadana especializada</strong>: gestión pública, contratación, derechos ambientales, rendición de cuentas y participación</li>
+              <li>✅ <strong>Análisis inteligente de contratación pública</strong> con detección de irregularidades</li>
+              <li>✅ <strong>Control presupuestal automatizado</strong> con alertas de desviaciones</li>
+              <li>✅ <strong>Seguimiento de cronogramas</strong> y cumplimiento de metas</li>
+              <li>✅ <strong>Auditoría forense digital</strong> con trazabilidad blockchain</li>
+              <li>✅ <strong>Análisis de transparencia</strong> y acceso a información pública</li>
+              <li>✅ <strong>Sistema PQRSFD</strong> para denuncias ciudadanas con seguimiento en tiempo real</li>
+              <li>✅ <strong>Conexión con órganos de control</strong>: Procuraduría, Contraloría, Fiscalía y Defensoría</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#60a5fa' }}>
+              🚀 Tecnologías de Vanguardia
+            </h3>
+            <p style={{ fontSize: '1.1rem', lineHeight: '1.9', opacity: 0.95 }}>
+              Con tecnologías de última generación como <strong>Inteligencia Artificial especializada (5 sistemas de IA), 
+              análisis geográfico avanzado con mapas interactivos, blockchain para trazabilidad inmutable</strong>, sistemas de 
+              <strong>anonimización inteligente para protección de víctimas</strong>, y <strong>generación automática de documentos 
+              legales en PDF</strong>, el sistema facilita la participación ciudadana efectiva, el control social riguroso, 
+              la veeduría ciudadana profesional y la protección integral de derechos étnicos y territoriales.
+            </p>
+          </div>
         </div>
         
         {/* Estadísticas en tiempo real */}
@@ -374,14 +428,17 @@ const Inicio = () => {
                 fontSize: '1rem',
                 marginBottom: '1rem'
               }}>
-                El Consejo IA te <strong>guía paso a paso</strong> en casos legales diversos:
+                El Consejo IA te <strong>guía paso a paso</strong> en casos legales diversos con <strong>análisis multidisciplinario</strong>:
               </p>
               <ul style={{ color: '#4b5563', lineHeight: '1.8', marginLeft: '1.5rem' }}>
-                <li>✅ Análisis jurídico especializado</li>
-                <li>✅ Identificación de normativa aplicable</li>
-                <li>✅ Precedentes jurisprudenciales</li>
-                <li>✅ Recomendaciones estratégicas</li>
-                <li>✅ Rutas de acción específicas</li>
+                <li>✅ <strong>Análisis jurídico especializado</strong> en derecho constitucional, penal, civil y administrativo</li>
+                <li>✅ <strong>Identificación automática de normativa aplicable</strong>: leyes, decretos, sentencias</li>
+                <li>✅ <strong>Precedentes jurisprudenciales relevantes</strong> de la Corte Constitucional y Consejo de Estado</li>
+                <li>✅ <strong>Recomendaciones estratégicas personalizadas</strong> según tu situación específica</li>
+                <li>✅ <strong>Rutas de acción detalladas</strong> con cronogramas y pasos a seguir</li>
+                <li>✅ <strong>Generación de documentos legales</strong> listos para presentar ante autoridades</li>
+                <li>✅ <strong>Identificación de víctimas y protección especial</strong> para casos sensibles</li>
+                <li>✅ <strong>Análisis de probabilidad de éxito</strong> basado en casos similares</li>
               </ul>
               <p style={{ 
                 marginTop: '1rem', 
@@ -392,8 +449,23 @@ const Inicio = () => {
                 color: '#1e40af',
                 fontWeight: '600'
               }}>
-                💡 <strong>5 sistemas de IA especializados</strong> analizan tu caso desde diferentes perspectivas 
-                para darte la guía más completa.
+                💡 <strong>5 sistemas de IA especializados funcionan en paralelo</strong>: Análisis Jurídico, IAs Profesionales, 
+                IA Mejorada, ChatGPT Optimizado y Sistema IA Profesional. Cada uno analiza tu caso desde diferentes perspectivas 
+                jurídicas, sociales y éticas para ofrecerte <strong>la guía más completa y precisa posible</strong>.
+              </p>
+              <p style={{ 
+                marginTop: '1rem', 
+                padding: '1rem',
+                background: '#fef3c7',
+                borderRadius: '0.5rem',
+                fontSize: '0.95rem',
+                color: '#b45309',
+                fontWeight: '600'
+              }}>
+                ⚡ <strong>Ventaja Única:</strong> A diferencia de consultas individuales con IA, nuestro sistema 
+                <strong> consulta 5 IAs simultáneamente</strong> y genera un <strong>análisis unificado consensuado</strong> 
+                con mayor precisión y confiabilidad. Además, genera <strong>PDFs profesionales</strong> con todo el análisis 
+                que puedes presentar ante autoridades judiciales.
               </p>
             </Card>
 
@@ -433,14 +505,17 @@ const Inicio = () => {
                 fontSize: '1rem',
                 marginBottom: '1rem'
               }}>
-                Sistema especializado que te <strong>guía en la vigilancia</strong> de la gestión pública:
+                Sistema especializado que te <strong>guía en la vigilancia profesional</strong> de la gestión pública con <strong>herramientas anticorrupción</strong>:
               </p>
               <ul style={{ color: '#4b5563', lineHeight: '1.8', marginLeft: '1.5rem' }}>
-                <li>✅ Análisis de transparencia</li>
-                <li>✅ Seguimiento de contratación pública</li>
-                <li>✅ Control presupuestal</li>
-                <li>✅ Gestión de cronogramas</li>
-                <li>✅ Participación ciudadana efectiva</li>
+                <li>✅ <strong>Análisis de transparencia</strong> con verificación de cumplimiento de normativa</li>
+                <li>✅ <strong>Seguimiento de contratación pública</strong> con detección de irregularidades</li>
+                <li>✅ <strong>Control presupuestal inteligente</strong> con alertas de desviaciones y sobrecostos</li>
+                <li>✅ <strong>Gestión de cronogramas</strong> comparando avance físico vs. financiero</li>
+                <li>✅ <strong>Participación ciudadana efectiva</strong> con metodologías certificadas</li>
+                <li>✅ <strong>Evaluación de calidad</strong> de obras y servicios públicos</li>
+                <li>✅ <strong>Generación de informes de hallazgos</strong> con evidencias documentadas</li>
+                <li>✅ <strong>Conexión directa con órganos de control</strong> para reportar irregularidades</li>
               </ul>
               <p style={{ 
                 marginTop: '1rem', 
@@ -451,8 +526,24 @@ const Inicio = () => {
                 color: '#065f46',
                 fontWeight: '600'
               }}>
-                💡 El sistema te <strong>guía con plantillas, formatos y metodologías</strong> para ejercer 
-                control social efectivo sobre proyectos públicos.
+                💡 El sistema analiza <strong>5 aspectos críticos en paralelo</strong>: Transparencia, Contratación, 
+                Presupuesto, Cronograma y Participación. Te proporciona <strong>plantillas profesionales, formatos oficiales, 
+                metodologías certificadas y listas de verificación</strong> para ejercer control social efectivo y detectar 
+                posibles casos de corrupción en proyectos públicos.
+              </p>
+              <p style={{ 
+                marginTop: '1rem', 
+                padding: '1rem',
+                background: '#fef2f2',
+                borderRadius: '0.5rem',
+                fontSize: '0.95rem',
+                color: '#dc2626',
+                fontWeight: '600'
+              }}>
+                🚨 <strong>Función Anticorrupción:</strong> El sistema <strong>compara automáticamente</strong> los datos del 
+                proyecto con estándares legales, promedios de mercado y bases de datos de proyectos similares para 
+                <strong> identificar sobrecostos, demoras injustificadas y posibles irregularidades</strong>. Los hallazgos se 
+                documentan con evidencias y se pueden reportar directamente a Contraloría, Procuraduría o Fiscalía.
               </p>
             </Card>
           </div>
@@ -891,12 +982,16 @@ const Inicio = () => {
               </div>
               <p style={{ 
                 fontSize: '1.1rem', 
-                lineHeight: '1.6', 
+                lineHeight: '1.8', 
                 color: '#4b5563' 
               }}>
-                Ser la plataforma líder en Colombia para la protección de derechos fundamentales, 
-                el análisis territorial inteligente y el desarrollo comunitario sostenible, 
-                utilizando tecnología de vanguardia para garantizar la justicia social.
+                Ser la <strong>plataforma tecnológica líder en Colombia y Latinoamérica</strong> para la protección 
+                integral de derechos fundamentales, la defensa de víctimas, la lucha efectiva contra la corrupción, 
+                el análisis territorial inteligente y el desarrollo comunitario sostenible, convirtiéndonos en el 
+                <strong>referente nacional en el uso de Inteligencia Artificial para la justicia social</strong> y 
+                el control ciudadano, garantizando <strong>acceso gratuito y universal a la justicia</strong> mediante 
+                tecnologías de vanguardia que democraticen el conocimiento jurídico y fortalezcan la participación 
+                ciudadana en la vigilancia de lo público.
               </p>
             </Card>
 
@@ -913,13 +1008,363 @@ const Inicio = () => {
               </div>
               <p style={{ 
                 fontSize: '1.1rem', 
-                lineHeight: '1.6', 
+                lineHeight: '1.8', 
                 color: '#4b5563' 
               }}>
-                Facilitar el acceso a la justicia y la participación ciudadana mediante 
-                herramientas tecnológicas innovadoras, promoviendo la transparencia, 
-                la equidad y el desarrollo territorial sostenible.
+                <strong>Facilitar el acceso gratuito, efectivo y universal a la justicia</strong> para todos los ciudadanos, 
+                especialmente para <strong>víctimas de vulneración de derechos y comunidades vulnerables</strong>, mediante 
+                herramientas tecnológicas innovadoras que incluyen <strong>Inteligencia Artificial especializada, análisis 
+                geográfico avanzado y sistemas anticorrupción</strong>. Promover activamente la <strong>transparencia en la 
+                gestión pública, el control social efectivo, la participación ciudadana informada</strong> y el <strong>desarrollo 
+                territorial sostenible con enfoque étnico y de género</strong>. Proporcionar <strong>capacitación, asesoría 
+                y acompañamiento integral</strong> a ciudadanos, comunidades y organizaciones sociales en la defensa de sus 
+                derechos y en el ejercicio de la <strong>veeduría ciudadana profesional como mecanismo de lucha contra la 
+                corrupción</strong>.
               </p>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      {/* Objetivos Generales y Específicos */}
+      <div style={{ 
+        padding: '4rem 2rem', 
+        background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)' 
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: 'bold', 
+            textAlign: 'center', 
+            marginBottom: '3rem',
+            color: '#1f2937'
+          }}>
+            🎯 Objetivos del Proyecto CSDT
+          </h2>
+
+          {/* Objetivo General */}
+          <Card style={{ 
+            padding: '2.5rem', 
+            marginBottom: '3rem',
+            background: 'white',
+            border: '3px solid #3b82f6'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              marginBottom: '1.5rem' 
+            }}>
+              <Target style={{ marginRight: '1rem', color: '#3b82f6' }} size={40} />
+              <h3 style={{ 
+                fontSize: '2rem', 
+                fontWeight: 'bold', 
+                color: '#1e40af' 
+              }}>
+                Objetivo General
+              </h3>
+            </div>
+            <p style={{ 
+              fontSize: '1.2rem', 
+              lineHeight: '1.9', 
+              color: '#374151',
+              textAlign: 'justify'
+            }}>
+              Desarrollar e implementar una <strong>plataforma tecnológica integral basada en Inteligencia Artificial</strong> 
+              que facilite el <strong>acceso gratuito a la justicia, la protección de víctimas de vulneración de derechos</strong>, 
+              el <strong>fortalecimiento del control social y la lucha efectiva contra la corrupción</strong> en Colombia, mediante 
+              la integración de <strong>11 módulos especializados con 77 páginas funcionales</strong> que cubren los ámbitos 
+              judicial, ejecutivo, legislativo, de control, participación ciudadana, derechos étnicos y gestión territorial, 
+              promoviendo la <strong>transparencia, equidad, participación ciudadana informada</strong> y el <strong>desarrollo 
+              sostenible con enfoque diferencial étnico, de género y territorial</strong>.
+            </p>
+          </Card>
+
+          {/* Objetivos Específicos */}
+          <h3 style={{ 
+            fontSize: '2rem', 
+            fontWeight: 'bold', 
+            textAlign: 'center', 
+            marginBottom: '2rem',
+            color: '#1f2937'
+          }}>
+            📌 Objetivos Específicos
+          </h3>
+
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+            gap: '2rem' 
+          }}>
+            {/* Objetivo Específico 1 */}
+            <Card style={{ padding: '2rem', background: 'white' }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-start',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: '#3b82f6',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  marginRight: '1rem',
+                  flexShrink: 0
+                }}>
+                  1
+                </div>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '1.3rem', 
+                    fontWeight: 'bold', 
+                    color: '#1e40af',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Protección Integral de Víctimas
+                  </h4>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.7', 
+                    color: '#4b5563' 
+                  }}>
+                    Implementar <strong>herramientas de IA especializadas</strong> para la identificación, protección y 
+                    acompañamiento de <strong>víctimas de vulneración de derechos fundamentales</strong>, garantizando 
+                    <strong>atención inmediata, anonimización de datos sensibles</strong> y <strong>generación automática 
+                    de acciones de tutela y habeas corpus</strong> para protección urgente.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Objetivo Específico 2 */}
+            <Card style={{ padding: '2rem', background: 'white' }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-start',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: '#ef4444',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  marginRight: '1rem',
+                  flexShrink: 0
+                }}>
+                  2
+                </div>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '1.3rem', 
+                    fontWeight: 'bold', 
+                    color: '#dc2626',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Combate Efectivo a la Corrupción
+                  </h4>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.7', 
+                    color: '#4b5563' 
+                  }}>
+                    Desarrollar <strong>5 tipos de veeduría ciudadana especializada</strong> con <strong>sistemas de IA 
+                    para detección automática de irregularidades</strong> en contratación pública, gestión presupuestal 
+                    y ejecución de proyectos, conectando directamente con <strong>órganos de control</strong> para 
+                    reportes con evidencias documentadas.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Objetivo Específico 3 */}
+            <Card style={{ padding: '2rem', background: 'white' }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-start',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: '#10b981',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  marginRight: '1rem',
+                  flexShrink: 0
+                }}>
+                  3
+                </div>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '1.3rem', 
+                    fontWeight: 'bold', 
+                    color: '#059669',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Democratización del Acceso a Justicia
+                  </h4>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.7', 
+                    color: '#4b5563' 
+                  }}>
+                    Facilitar <strong>acceso gratuito y universal a asesoría jurídica especializada</strong> mediante 
+                    el <strong>Consejo IA con 5 sistemas de inteligencia artificial en paralelo</strong>, eliminando 
+                    barreras económicas, geográficas y de conocimiento para el acceso a la justicia.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Objetivo Específico 4 */}
+            <Card style={{ padding: '2rem', background: 'white' }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-start',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: '#f59e0b',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  marginRight: '1rem',
+                  flexShrink: 0
+                }}>
+                  4
+                </div>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '1.3rem', 
+                    fontWeight: 'bold', 
+                    color: '#d97706',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Protección de Derechos Étnicos y Territoriales
+                  </h4>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.7', 
+                    color: '#4b5563' 
+                  }}>
+                    Garantizar la protección de <strong>derechos de pueblos indígenas, comunidades afrodescendientes 
+                    y pueblo rom</strong>, implementando herramientas para <strong>consulta previa, planes de etnodesarrollo, 
+                    protección de territorios ancestrales</strong> y <strong>análisis étnico con IA especializada</strong>.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Objetivo Específico 5 */}
+            <Card style={{ padding: '2rem', background: 'white' }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-start',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: '#8b5cf6',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  marginRight: '1rem',
+                  flexShrink: 0
+                }}>
+                  5
+                </div>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '1.3rem', 
+                    fontWeight: 'bold', 
+                    color: '#7c3aed',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Participación Ciudadana Informada
+                  </h4>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.7', 
+                    color: '#4b5563' 
+                  }}>
+                    Fortalecer los <strong>mecanismos de participación ciudadana</strong> (consulta popular, referendo, 
+                    plebiscito, cabildo abierto, revocatoria de mandato e iniciativa popular) mediante <strong>plataformas 
+                    digitales</strong> que faciliten la <strong>participación informada, documentada y efectiva</strong>.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Objetivo Específico 6 */}
+            <Card style={{ padding: '2rem', background: 'white' }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-start',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: '#06b6d4',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  marginRight: '1rem',
+                  flexShrink: 0
+                }}>
+                  6
+                </div>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '1.3rem', 
+                    fontWeight: 'bold', 
+                    color: '#0891b2',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Análisis Territorial Inteligente
+                  </h4>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    lineHeight: '1.7', 
+                    color: '#4b5563' 
+                  }}>
+                    Implementar <strong>sistemas de análisis geográfico avanzado</strong> con <strong>mapas interactivos, 
+                    visualización de datos territoriales</strong> y <strong>análisis espacial con IA</strong> para 
+                    identificar patrones, vulnerabilidades y oportunidades de desarrollo territorial sostenible.
+                  </p>
+                </div>
+              </div>
             </Card>
           </div>
         </div>
@@ -935,7 +1380,7 @@ const Inicio = () => {
             marginBottom: '3rem',
             color: '#1f2937'
           }}>
-            Objetivos del Proyecto
+            🎯 Beneficios y Alcances del Proyecto
           </h2>
           
           <div style={{ 
@@ -1124,6 +1569,367 @@ const Inicio = () => {
               </Card>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Estructura de Trabajo y Procesos Recomendados */}
+      <div style={{ 
+        padding: '4rem 2rem', 
+        background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
+        color: 'white'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: 'bold', 
+            textAlign: 'center', 
+            marginBottom: '1.5rem',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+          }}>
+            🔄 Estructura de Trabajo y Procesos Recomendados
+          </h2>
+          <p style={{ 
+            fontSize: '1.2rem', 
+            textAlign: 'center', 
+            marginBottom: '3rem',
+            opacity: 0.95,
+            maxWidth: '900px',
+            margin: '0 auto 3rem'
+          }}>
+            El Sistema CSDT está diseñado con una <strong>estructura modular y flujos de trabajo optimizados</strong> 
+            para facilitar el acceso a la justicia y el control social efectivo
+          </p>
+
+          {/* Proceso 1: Para Víctimas */}
+          <Card style={{ 
+            padding: '2rem', 
+            marginBottom: '2rem',
+            background: 'rgba(255, 255, 255, 0.95)'
+          }}>
+            <h3 style={{ 
+              fontSize: '1.8rem', 
+              fontWeight: 'bold', 
+              color: '#1e40af',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              <Shield style={{ marginRight: '1rem' }} size={32} />
+              Proceso Recomendado para Víctimas de Vulneración de Derechos
+            </h3>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+              gap: '1.5rem',
+              color: '#374151'
+            }}>
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#eff6ff', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #3b82f6'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#3b82f6',
+                  marginBottom: '0.5rem'
+                }}>
+                  1️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#1e40af' }}>
+                  Acceso al Consejo IA
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Ingresa al <strong>Consejo IA</strong> y narra los hechos por escrito o grabación de voz. 
+                  El sistema transcribe automáticamente.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#f0fdf4', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #10b981'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#10b981',
+                  marginBottom: '0.5rem'
+                }}>
+                  2️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#059669' }}>
+                  Análisis Inteligente
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  <strong>5 sistemas de IA analizan tu caso</strong> en paralelo, identificando derechos vulnerados, 
+                  normativa aplicable y precedentes relevantes.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#fef3c7', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #f59e0b'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#f59e0b',
+                  marginBottom: '0.5rem'
+                }}>
+                  3️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#d97706' }}>
+                  Recomendaciones
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Recibes <strong>guías específicas, rutas de acción</strong> y el sistema genera automáticamente 
+                  <strong>acciones de tutela o habeas corpus</strong> si aplica.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#fce7f3', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #ec4899'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#ec4899',
+                  marginBottom: '0.5rem'
+                }}>
+                  4️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#be185d' }}>
+                  Documentación
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Descarga <strong>reportes en PDF profesionales</strong> con todo el análisis para presentar 
+                  ante autoridades judiciales.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#f3e8ff', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #a855f7'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#a855f7',
+                  marginBottom: '0.5rem'
+                }}>
+                  5️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#7c3aed' }}>
+                  Seguimiento
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  El sistema crea una <strong>dependencia de seguimiento</strong> con código único para 
+                  monitorear el avance de tu caso.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Proceso 2: Para Veedores Ciudadanos */}
+          <Card style={{ 
+            padding: '2rem', 
+            marginBottom: '2rem',
+            background: 'rgba(255, 255, 255, 0.95)'
+          }}>
+            <h3 style={{ 
+              fontSize: '1.8rem', 
+              fontWeight: 'bold', 
+              color: '#dc2626',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              <Eye style={{ marginRight: '1rem' }} size={32} />
+              Proceso Recomendado para Veeduría Ciudadana y Control de Corrupción
+            </h3>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+              gap: '1.5rem',
+              color: '#374151'
+            }}>
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#eff6ff', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #3b82f6'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#3b82f6',
+                  marginBottom: '0.5rem'
+                }}>
+                  1️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#1e40af' }}>
+                  Seleccionar Tipo de Veeduría
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Accede al <strong>Consejo IA - Control Social & Veeduría</strong> y describe el proyecto 
+                  público que deseas vigilar.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#f0fdf4', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #10b981'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#10b981',
+                  marginBottom: '0.5rem'
+                }}>
+                  2️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#059669' }}>
+                  Análisis en 5 Dimensiones
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  El sistema analiza: <strong>Transparencia, Contratación, Presupuesto, Cronograma y Participación</strong> 
+                  con detección de irregularidades.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#fef3c7', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #f59e0b'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#f59e0b',
+                  marginBottom: '0.5rem'
+                }}>
+                  3️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#d97706' }}>
+                  Identificación de Hallazgos
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Recibes <strong>informes detallados</strong> con comparación vs. estándares legales, 
+                  identificando <strong>sobrecostos, demoras e irregularidades</strong>.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#fef2f2', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #ef4444'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#ef4444',
+                  marginBottom: '0.5rem'
+                }}>
+                  4️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#dc2626' }}>
+                  Documentación con Evidencias
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Genera <strong>informes de hallazgos con evidencias</strong> documentadas en formato oficial 
+                  para órganos de control.
+                </p>
+              </div>
+
+              <div style={{ 
+                padding: '1.5rem', 
+                background: '#f3e8ff', 
+                borderRadius: '0.75rem',
+                borderLeft: '4px solid #a855f7'
+              }}>
+                <div style={{ 
+                  fontSize: '2rem', 
+                  fontWeight: 'bold', 
+                  color: '#a855f7',
+                  marginBottom: '0.5rem'
+                }}>
+                  5️⃣
+                </div>
+                <h4 style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#7c3aed' }}>
+                  Reporte a Órganos de Control
+                </h4>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+                  Conecta directamente con <strong>Contraloría, Procuraduría o Fiscalía</strong> para 
+                  reportar hallazgos con evidencias.
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Arquitectura del Sistema */}
+          <Card style={{ 
+            padding: '2rem',
+            background: 'rgba(255, 255, 255, 0.95)'
+          }}>
+            <h3 style={{ 
+              fontSize: '1.8rem', 
+              fontWeight: 'bold', 
+              color: '#059669',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              <Network style={{ marginRight: '1rem' }} size={32} />
+              Arquitectura y Estructura del Sistema
+            </h3>
+            <div style={{ color: '#374151' }}>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '1rem' }}>
+                El sistema está construido con una <strong>arquitectura moderna y escalable</strong>:
+              </p>
+              <ul style={{ fontSize: '1.05rem', lineHeight: '1.8', marginLeft: '2rem', marginBottom: '1rem' }}>
+                <li>✅ <strong>Backend Laravel 11</strong> con API RESTful, arquitectura MVC y 28 tablas de base de datos</li>
+                <li>✅ <strong>Frontend React 18</strong> con Vite, Tailwind CSS y 77 páginas completamente funcionales</li>
+                <li>✅ <strong>11 Módulos Especializados</strong>: Innovación IA, Rama Judicial, Acciones Constitucionales, Rama Ejecutiva, 
+                Rama Legislativa, Órganos de Control, Participación Ciudadana, Derechos Étnicos, Gestión Institucional, Servicios Compartidos 
+                y Gestión de Proyectos</li>
+                <li>✅ <strong>Sistema de Autenticación</strong> con roles y permisos granulares</li>
+                <li>✅ <strong>5 Servicios de IA</strong> funcionando en paralelo para análisis multidimensional</li>
+                <li>✅ <strong>Generación de PDFs profesionales</strong> con jsPDF para documentos legales oficiales</li>
+                <li>✅ <strong>Mapas interactivos</strong> con Leaflet para análisis geográfico territorial</li>
+                <li>✅ <strong>Sistema de dependencias y seguimiento</strong> de casos con códigos únicos</li>
+                <li>✅ <strong>Auditoría forense digital</strong> con trazabilidad blockchain</li>
+                <li>✅ <strong>Anonimización inteligente</strong> para protección de víctimas</li>
+              </ul>
+              <p style={{ 
+                fontSize: '1.05rem', 
+                lineHeight: '1.8',
+                padding: '1rem',
+                background: '#f0fdf4',
+                borderRadius: '0.5rem',
+                marginTop: '1rem',
+                fontWeight: '600',
+                color: '#065f46'
+              }}>
+                💡 <strong>Recomendación:</strong> Para aprovechar al máximo el sistema, comienza por el <strong>Consejo IA</strong> 
+                para recibir guías especializadas. Luego explora los módulos específicos según tu necesidad. Todos los módulos 
+                están interconectados y comparten información para ofrecerte una experiencia integral y fluida.
+              </p>
+            </div>
+          </Card>
         </div>
       </div>
 
