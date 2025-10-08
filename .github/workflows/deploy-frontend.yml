@@ -1,0 +1,54 @@
+name: Deploy Frontend to Digital Ocean
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚀 Desplegando Frontend en Digital Ocean
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DO_HOST }}
+        username: ${{ secrets.DO_USERNAME }}
+        key: ${{ secrets.DO_SSH_KEY }}
+        script: |
+          echo "📥 Actualizando Frontend..."
+          
+          cd /var/www/csdt-f
+          
+          # Actualizar código
+          git fetch origin
+          git reset --hard origin/main
+          git pull origin main
+          
+          # Crear .env
+          cat > .env <<EOF
+          VITE_API_URL=http://192.241.144.89/api
+          VITE_APP_NAME=CSDT
+          VITE_APP_ENV=production
+          EOF
+          
+          # Limpiar dependencias anteriores
+          rm -rf node_modules package-lock.json
+          
+          # Instalar dependencias
+          npm install --silent
+          
+          # Compilar
+          export NODE_OPTIONS="--max-old-space-size=384"
+          npm run build
+          
+          # Permisos
+          chown -R www-data:www-data dist
+          chmod -R 755 dist
+          
+          # Reiniciar Nginx
+          systemctl reload nginx
+          
+          echo "✅ Frontend actualizado correctamente"
+
