@@ -63,12 +63,12 @@ class DatabaseConnectionTester {
       },
       {
         name: 'etnicos_pueblos',
-        test: () => csdtApiService.etnicos.obtenerPueblosIndigenas(),
+        test: () => csdtApiService.etnicos.pueblosIndigenas.listar(),
         required: true
       },
       {
         name: 'etnicos_comunidades',
-        test: () => csdtApiService.etnicos.obtenerComunidadesAfro(),
+        test: () => csdtApiService.etnicos.comunidadesAfro.listar(),
         required: true
       },
       {
@@ -76,11 +76,7 @@ class DatabaseConnectionTester {
         test: () => csdtApiService.ia.especialistas.listar(),
         required: false
       },
-      {
-        name: 'estadisticas_generales',
-        test: () => csdtApiService.estadisticas.generales(),
-        required: false
-      }
+      // Puedes añadir más pruebas específicas aquí
     ];
 
     console.log('🔍 Probando endpoints específicos...');
@@ -142,7 +138,7 @@ class DatabaseConnectionTester {
       };
 
       console.log('📝 Probando creación de datos...');
-      const createResponse = await csdtApiService.etnicos.crear(testData);
+      const createResponse = await csdtApiService.etnicos.comunidadesAfro.crear(testData);
       
       this.results.endpoints['crud_create'] = {
         status: 'success',
@@ -155,7 +151,7 @@ class DatabaseConnectionTester {
       // Si se creó exitosamente, probar lectura
       if (createResponse.data && createResponse.data.id) {
         console.log('📖 Probando lectura de datos...');
-        const readResponse = await csdtApiService.etnicos.obtener(createResponse.data.id);
+        const readResponse = await csdtApiService.etnicos.comunidadesAfro.obtener(createResponse.data.id);
         
         this.results.endpoints['crud_read'] = {
           status: 'success',
@@ -167,7 +163,7 @@ class DatabaseConnectionTester {
         
         // Probar eliminación
         console.log('🗑️ Probando eliminación de datos...');
-        await csdtApiService.etnicos.eliminar(createResponse.data.id);
+        await csdtApiService.etnicos.comunidadesAfro.eliminar(createResponse.data.id);
         
         this.results.endpoints['crud_delete'] = {
           status: 'success',

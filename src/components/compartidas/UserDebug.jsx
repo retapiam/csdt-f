@@ -31,6 +31,9 @@ const UserDebug = () => {
     );
   }
 
+  // Deshabilitado para todos los roles (no visible en producción ni desarrollo)
+  return null;
+
   return (
     <div style={{
       position: 'fixed',

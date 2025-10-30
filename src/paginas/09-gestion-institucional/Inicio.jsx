@@ -1733,7 +1733,7 @@ const Inicio = () => {
                   Seguimiento
                 </h4>
                 <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
-                  El sistema crea una <strong>dependencia de seguimiento</strong> con código único para 
+                  El sistema crea una <strong>dependencia (actividad) de seguimiento</strong> con código único para 
                   monitorear el avance de tu caso.
                 </p>
               </div>
@@ -1910,7 +1910,7 @@ const Inicio = () => {
                 <li>✅ <strong>5 Servicios de IA</strong> funcionando en paralelo para análisis multidimensional</li>
                 <li>✅ <strong>Generación de PDFs profesionales</strong> con jsPDF para documentos legales oficiales</li>
                 <li>✅ <strong>Mapas interactivos</strong> con Leaflet para análisis geográfico territorial</li>
-                <li>✅ <strong>Sistema de dependencias y seguimiento</strong> de casos con códigos únicos</li>
+                <li>✅ <strong>Sistema de dependencias (actividades) y seguimiento</strong> de casos con códigos únicos</li>
                 <li>✅ <strong>Auditoría forense digital</strong> con trazabilidad blockchain</li>
                 <li>✅ <strong>Anonimización inteligente</strong> para protección de víctimas</li>
               </ul>

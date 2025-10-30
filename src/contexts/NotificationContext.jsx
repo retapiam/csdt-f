@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext } from 'react'
+﻿import React, { createContext, useContext, useEffect } from 'react'
 import useNotifications from '@hooks/useNotifications'
 import NotificationContainer from '@components/NotificationContainer'
 
@@ -14,6 +14,24 @@ export const useNotification = () => {
 
 export const NotificationProvider = ({ children }) => {
   const notificationHook = useNotifications()
+
+  // Escuchar eventos globales para disparar notificaciones desde capas sin contexto
+  useEffect(() => {
+    const handler = (ev) => {
+      const detail = ev?.detail || {}
+      const { type = 'info', message = '', options = {} } = detail
+      const map = {
+        success: notificationHook.success,
+        error: notificationHook.error,
+        warning: notificationHook.warning,
+        info: notificationHook.info
+      }
+      const fn = map[type] || notificationHook.info
+      fn(message, options)
+    }
+    window.addEventListener('csdt:notify', handler)
+    return () => window.removeEventListener('csdt:notify', handler)
+  }, [notificationHook])
 
   return (
     <NotificationContext.Provider value={notificationHook}>

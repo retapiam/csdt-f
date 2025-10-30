@@ -204,7 +204,7 @@ const MenuPrincipal = () => {
     // Solo aparecen en la navegación por rol cuando el usuario está autenticado
   ];
 
-  // Páginas compartidas - Activadas según carpeta 10-servicios-compartidos
+  // Páginas compartidas - Activadas según carpeta 11-servicios-compartidos
   const paginasCompartidas = [
     { name: 'Ayuda', href: '/ayuda', icon: '❓' },
     { name: 'Contacto', href: '/contacto', icon: '📞' },
@@ -242,7 +242,7 @@ const MenuPrincipal = () => {
       case 'ope': // Operador
         navegacion.push(
           { name: '--- ÁREA OPERADOR ---', href: '#', icon: '', level: 2, esSeparador: true },
-          { name: 'Mis Tareas', href: '/operador-proyectos', icon: '⚙️', level: 2 },
+          { name: 'Mis Colas', href: '/operador-proyectos', icon: '⚙️', level: 2 },
           { name: '--- ÁREA CLIENTE ---', href: '#', icon: '', level: 1, esSeparador: true },
           { name: 'Mis Proyectos', href: '/cliente-proyectos', icon: '👤', level: 1 }
         );
@@ -252,10 +252,12 @@ const MenuPrincipal = () => {
         navegacion.push(
           { name: '--- ÁREA ADMINISTRADOR ---', href: '#', icon: '', level: 3, esSeparador: true },
           { name: 'Dashboard Admin', href: '/admin-proyectos', icon: '👑', level: 3 },
+          { name: 'PAE', href: '/pae', icon: '🍽️', level: 3 },
+          { name: 'CAE', href: '/cae', icon: '🏫', level: 3 },
           { name: 'Crear Proyecto', href: '/crear-proyecto', icon: '➕', level: 3 },
           { name: 'APUs y Cotizaciones', href: '/gestion-apus-cotizaciones', icon: '💰', level: 3 },
           { name: '--- ÁREA OPERADOR ---', href: '#', icon: '', level: 2, esSeparador: true },
-          { name: 'Mis Tareas', href: '/operador-proyectos', icon: '⚙️', level: 2 },
+          { name: 'Mis Colas', href: '/operador-proyectos', icon: '⚙️', level: 2 },
           { name: '--- ÁREA CLIENTE ---', href: '#', icon: '', level: 1, esSeparador: true },
           { name: 'Mis Proyectos', href: '/cliente-proyectos', icon: '👤', level: 1 }
         );
@@ -264,13 +266,17 @@ const MenuPrincipal = () => {
       case 'adm_gen': // Administrador General
         navegacion.push(
           { name: '--- ÁREA ADMIN GENERAL ---', href: '#', icon: '', level: 4, esSeparador: true },
+          { name: 'Panel de Vista', href: '/panel-vista', icon: '📋', level: 4 },
+          { name: 'Servicios de Mapas', href: '/admin/servicios-mapas', icon: '🗺️', level: 4 },
           { name: 'Dashboard Admin', href: '/admin-proyectos', icon: '🏛️', level: 4 },
+          { name: 'PAE', href: '/pae', icon: '🍽️', level: 4 },
+          { name: 'CAE', href: '/cae', icon: '🏫', level: 4 },
           { name: 'Crear Proyecto', href: '/crear-proyecto', icon: '➕', level: 4 },
           { name: 'APUs y Cotizaciones', href: '/gestion-apus-cotizaciones', icon: '💰', level: 4 },
           { name: '--- ÁREA ADMINISTRADOR ---', href: '#', icon: '', level: 3, esSeparador: true },
           { name: 'Dashboard Admin', href: '/admin-proyectos', icon: '👑', level: 3 },
           { name: '--- ÁREA OPERADOR ---', href: '#', icon: '', level: 2, esSeparador: true },
-          { name: 'Mis Tareas', href: '/operador-proyectos', icon: '⚙️', level: 2 },
+          { name: 'Mis Colas', href: '/operador-proyectos', icon: '⚙️', level: 2 },
           { name: '--- ÁREA CLIENTE ---', href: '#', icon: '', level: 1, esSeparador: true },
           { name: 'Mis Proyectos', href: '/cliente-proyectos', icon: '👤', level: 1 }
         );

@@ -80,7 +80,13 @@ export const API_ENDPOINTS = {
     LOGOUT: '/auth/logout',
     ME: '/auth/me',
     UPDATE_PROFILE: '/auth/profile',
-    CHANGE_PASSWORD: '/auth/change-password'
+    CHANGE_PASSWORD: '/auth/change-password',
+    TWO_FA: {
+      ENABLE: '/auth/2fa/enable',
+      VERIFY: '/auth/2fa/verify',
+      DISABLE: '/auth/2fa/disable',
+      STATUS: '/auth/2fa/status'
+    }
   },
 
   // Usuarios
@@ -150,6 +156,12 @@ export const API_ENDPOINTS = {
     BY_ID: (id) => `/veedurias/${id}`,
     MONITORING: (id) => `/veedurias/${id}/seguimientos`,
     CREATE_MONITORING: (id) => `/veedurias/${id}/seguimientos`,
+  },
+
+  // Territorial (configurable por entorno)
+  TERRITORIAL: {
+    // Endpoint configurable para solicitudes de ampliación territorial
+    AMPLIACION: import.meta.env.VITE_TERRITORIAL_AMPLIACION_ENDPOINT || '/etnicos/consultas-previas'
   },
 
   // Donaciones
@@ -256,6 +268,101 @@ export const APP_CONFIG = {
   }
 };
 
+// ==================== CONFIGURACIÓN DE MAPAS ====================
+
+export const MAP_CONFIG = {
+  // Token de Mapbox tomado de variables de entorno
+  MAPBOX_TOKEN: import.meta.env.VITE_MAPBOX_TOKEN || '',
+  // Estilo por defecto (puede sobrescribirse por env)
+  MAPBOX_STYLE: import.meta.env.VITE_MAPBOX_STYLE || 'streets-v12',
+  // URL de tiles de Mapbox Styles API para uso con Leaflet
+  // Nota: Leaflet trabaja mejor con tiles de 512px y zoomOffset -1 para Mapbox Styles
+  TILE_URL: (token, style) => `https://api.mapbox.com/styles/v1/mapbox/${style}/tiles/{z}/{x}/{y}?access_token=${token}`,
+  TILE_SIZE: 512,
+  ZOOM_OFFSET: -1,
+  ATTRIBUTION: '© Mapbox © OpenStreetMap contributors',
+
+  // Fallback OSM
+  OSM_TILE_URL: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  OSM_ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+};
+
+// Proveedores adicionales de mapas (satélite y alternativos)
+export const MAP_PROVIDERS = {
+  // Mapbox Satellite
+  MAPBOX_SATELLITE: (token) => ({
+    url: `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=${token}`,
+    attribution: '© Mapbox © OpenStreetMap contributors',
+    tileSize: 512,
+    zoomOffset: -1
+  }),
+
+  // Esri World Imagery (satélite)
+  ESRI_WORLD_IMAGERY: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+  },
+
+  // Yandex (requiere URL propia por TOS)
+  YANDEX: {
+    url: import.meta.env.VITE_YANDEX_TILE_URL || '',
+    attribution: import.meta.env.VITE_YANDEX_ATTRIBUTION || '© Yandex'
+  },
+
+  // Maxar (normalmente vía WMTS/XYZ privado: proveer URL en .env)
+  MAXAR: {
+    url: import.meta.env.VITE_MAXAR_TILE_URL || '',
+    attribution: import.meta.env.VITE_MAXAR_ATTRIBUTION || '© Maxar'
+  },
+
+  // Custom genérico XYZ (para proveedores no listados)
+  CUSTOM_XYZ: {
+    url: import.meta.env.VITE_CUSTOM_SAT_TILE_URL || '',
+    attribution: import.meta.env.VITE_CUSTOM_SAT_ATTRIBUTION || ''
+  },
+
+  // Libres/abiertos
+  CARTO_POSITRON: {
+    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+  },
+  CARTO_DARK_MATTER: {
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+  },
+  OPENTOPOMAP: {
+    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap'
+  },
+  WIKIMEDIA: {
+    url: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+    attribution: '&copy; OpenStreetMap contributors &copy; Wikimedia'
+  }
+};
+
+// Configuración genérica para WMS/WMTS (para capas satelitales corporativas)
+export const MAP_WMS = {
+  URL: import.meta.env.VITE_WMS_URL || '',
+  LAYERS: import.meta.env.VITE_WMS_LAYERS || '',
+  FORMAT: import.meta.env.VITE_WMS_FORMAT || 'image/png',
+  VERSION: import.meta.env.VITE_WMS_VERSION || '1.3.0',
+  TRANSPARENT: (import.meta.env.VITE_WMS_TRANSPARENT || 'true') === 'true',
+  ATTRIBUTION: import.meta.env.VITE_WMS_ATTRIBUTION || '© WMS Provider'
+};
+
+// ==================== CONFIGURACIÓN DE CRS/PROJ4 ====================
+
+export const CRS_CONFIG = {
+  // Habilitar CRS personalizado si se define EPSG y definición PROJ4
+  ENABLED: Boolean(import.meta.env.VITE_CRS_EPSG && import.meta.env.VITE_CRS_PROJ4_DEF),
+  EPSG: import.meta.env.VITE_CRS_EPSG || 'EPSG:3857',
+  PROJ4_DEF: import.meta.env.VITE_CRS_PROJ4_DEF || '',
+  // Opciones avanzadas para L.Proj.CRS (JSON en .env si aplica)
+  ORIGIN: import.meta.env.VITE_CRS_ORIGIN ? JSON.parse(import.meta.env.VITE_CRS_ORIGIN) : undefined,
+  RESOLUTIONS: import.meta.env.VITE_CRS_RESOLUTIONS ? JSON.parse(import.meta.env.VITE_CRS_RESOLUTIONS) : undefined,
+  BOUNDS: import.meta.env.VITE_CRS_BOUNDS ? JSON.parse(import.meta.env.VITE_CRS_BOUNDS) : undefined
+};
+
 // ==================== UTILIDADES ====================
 
 /**
@@ -322,6 +429,10 @@ export default {
   ENDPOINTS: API_ENDPOINTS,
   ROUTES,
   APP: APP_CONFIG,
+  MAP: MAP_CONFIG,
+  MAP_PROVIDERS,
+  MAP_WMS,
+  CRS: CRS_CONFIG,
   // Utilidades
   buildApiUrl,
   getApiHeaders,

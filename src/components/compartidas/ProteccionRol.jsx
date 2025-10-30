@@ -28,6 +28,11 @@ const ProteccionRol = ({
 }) => {
   const { user, isAuthenticated, hasPermission } = useAuth();
 
+  // Acceso total para Administrador General (Nivel 4)
+  if (user && user.rol === 'adm_gen') {
+    return children;
+  }
+
   // Verificar autenticación
   if (requiereAutenticacion && !isAuthenticated()) {
     if (!mostrarMensaje) return null;

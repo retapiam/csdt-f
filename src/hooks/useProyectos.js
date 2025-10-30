@@ -16,8 +16,8 @@ export const useProyectos = (filters = {}, options = {}) => {
   const [lastSync, setLastSync] = useState(null);
 
   const {
-    autoSync = true,
-    syncInterval = 5 * 60 * 1000, // 5 minutos
+    autoSync = false,
+    syncInterval = 30 * 60 * 1000, // 30 minutos
     showSuccessMessage = false,
     showErrorMessage = true
   } = options;
@@ -185,8 +185,8 @@ export const useTareas = (filters = {}, options = {}) => {
   const [lastSync, setLastSync] = useState(null);
 
   const {
-    autoSync = true,
-    syncInterval = 5 * 60 * 1000,
+    autoSync = false,
+    syncInterval = 30 * 60 * 1000,
     showSuccessMessage = false,
     showErrorMessage = true
   } = options;
@@ -287,8 +287,8 @@ export const useEstadisticasProyectos = (options = {}) => {
   const [error, setError] = useState(null);
 
   const {
-    autoSync = true,
-    syncInterval = 2 * 60 * 1000, // 2 minutos para estadísticas
+    autoSync = false,
+    syncInterval = 30 * 60 * 1000, // 30 minutos
     showSuccessMessage = false,
     showErrorMessage = true
   } = options;

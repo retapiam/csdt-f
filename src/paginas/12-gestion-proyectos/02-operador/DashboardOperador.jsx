@@ -43,6 +43,9 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { usePermisosVista } from '../../../contexts/PermisosVistaContext';
 import { useTareas, useEstadisticasProyectos } from '../../../hooks/useProyectos';
 import ProteccionRol from '../../../components/compartidas/ProteccionRol';
+import unifiedAIService from '../../../services/ia/UnifiedAIService';
+import pdfAvanzadoService from '../../../services/pdf/PDFAvanzadoService';
+import toast from 'react-hot-toast';
 
 const DashboardOperador = ({ modoSoloLectura = false, permisos = {} }) => {
   const { user, isAuthenticated } = useAuth();
@@ -54,14 +57,14 @@ const DashboardOperador = ({ modoSoloLectura = false, permisos = {} }) => {
     loading: cargandoTareas, 
     error: errorTareas,
     refresh: refreshTareas
-  } = useTareas({}, { autoSync: true });
+  } = useTareas({}, { autoSync: false });
 
   const { 
     estadisticas, 
     loading: cargandoEstadisticas, 
     error: errorEstadisticas,
     refresh: refreshEstadisticas
-  } = useEstadisticasProyectos({ autoSync: true });
+  } = useEstadisticasProyectos({ autoSync: false });
 
   const [alertas, setAlertas] = useState([]);
 
@@ -164,6 +167,27 @@ const DashboardOperador = ({ modoSoloLectura = false, permisos = {} }) => {
   const handleCompletarTarea = (tareaId) => {
     // Lógica para completar tarea
     console.log('Completando tarea:', tareaId);
+  };
+  const handleConsultarIA = async (tarea) => {
+    try {
+      const texto = `${tarea.nombre} - ${tarea.descripcion || ''}`;
+      const result = await unifiedAIService.quickAnalyze({ text: texto, legal_area: 'Derecho General', jurisdiction: 'colombia' });
+      toast.success('IA analizó la cola');
+      console.log('IA tarea', result);
+    } catch (e) {
+      toast.error('Error consultando IA');
+    }
+  };
+
+  const handleGenerarPDF = async (tarea) => {
+    try {
+      const datos = { titulo: `Resumen Cola - ${tarea.nombre}`, resumen: tarea.descripcion || 'Resumen', puntos_clave: ['Estado', 'Riesgos', 'Recomendaciones'], recomendaciones: ['Siguiente paso'] };
+      const pdf = await pdfAvanzadoService.generarPDFAvanzado(datos, { plantilla: 'resumen_ejecutivo', estilo: 'oficial' });
+      pdf.archivo.documento.save(pdf.archivo.nombre);
+      toast.success('PDF generado');
+    } catch (e) {
+      toast.error('Error generando PDF');
+    }
   };
 
   const handleCrearSubtarea = (tareaId) => {
@@ -287,10 +311,10 @@ const DashboardOperador = ({ modoSoloLectura = false, permisos = {} }) => {
           {/* Tareas Asignadas */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-lg font-semibold">Tareas Asignadas</CardTitle>
+              <CardTitle className="text-lg font-semibold">Colas Asignadas</CardTitle>
               <Button variant="outline" size="sm">
                 <Plus className="h-4 w-4 mr-2" />
-                Nueva Tarea
+                Nueva Cola
               </Button>
             </CardHeader>
             <CardContent>
@@ -378,6 +402,12 @@ const DashboardOperador = ({ modoSoloLectura = false, permisos = {} }) => {
                         <div className="flex space-x-1">
                           <Button variant="outline" size="sm" title="Ver detalles">
                             <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="sm" title="Consultar IA" onClick={() => handleConsultarIA(tarea)}>
+                            🤖
+                          </Button>
+                          <Button variant="outline" size="sm" title="Generar PDF" onClick={() => handleGenerarPDF(tarea)}>
+                            <FileText className="h-4 w-4" />
                           </Button>
                           {puedeRealizarEdicion && (
                             <>

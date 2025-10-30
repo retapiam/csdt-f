@@ -197,13 +197,13 @@ const GestionProyectos = () => {
     loading: cargandoProyectos, 
     error: errorProyectos,
     tienePermisos 
-  } = useProyectos({}, { autoSync: true });
+  } = useProyectos({}, { autoSync: false });
 
   const { 
     estadisticas, 
     loading: cargandoEstadisticas, 
     error: errorEstadisticas 
-  } = useEstadisticasProyectos({ autoSync: true });
+  } = useEstadisticasProyectos({ autoSync: false });
 
   // Verificar autenticación y configurar permisos según rol
   useEffect(() => {

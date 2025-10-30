@@ -21,10 +21,12 @@ import {
   TrendingUp,
   BarChart3,
   Save,
-  RefreshCw
+  RefreshCw,
+  Eye
 } from 'lucide-react';
 import { useAuth } from '../../../contexts/AuthContext';
 import gestionProyectosService from '@services/GestionProyectosService';
+import apuService from '@services/APUService';
 
 const GestionAPUsCotizaciones = () => {
   const { user } = useAuth();
@@ -64,7 +66,7 @@ const GestionAPUsCotizaciones = () => {
       setCargando(true);
       
       // Cargar APUs existentes
-      setApus([
+      const apusIniciales = [
         {
           id: 1,
           codigo: 'APU-001',
@@ -98,7 +100,9 @@ const GestionAPUsCotizaciones = () => {
           fechaCreacion: '2025-02-01',
           activo: true
         }
-      ]);
+      ];
+      setApus(apusIniciales);
+      apuService.setAll(apusIniciales);
 
       // Cargar cotizaciones
       setCotizaciones([

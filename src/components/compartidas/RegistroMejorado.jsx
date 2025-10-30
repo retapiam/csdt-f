@@ -43,7 +43,7 @@ const RegistroMejorado = ({ onClose, onSuccess }) => {
     { value: 'cc', label: 'Cédula de Ciudadanía' },
     { value: 'ce', label: 'Cédula de Extranjería' },
     { value: 'ti', label: 'Tarjeta de Identidad' },
-    { value: 'pp', label: 'Pasaporte' },
+    { value: 'pasaporte', label: 'Pasaporte' },
     { value: 'nit', label: 'NIT' }
   ];
 
@@ -60,36 +60,13 @@ const RegistroMejorado = ({ onClose, onSuccess }) => {
     { value: 'n', label: 'No especificar' }
   ];
 
-  // Cargar datos de referencia al montar el componente
+  // Cargar datos de referencia (desactivado: endpoints no existen en backend actual)
   useEffect(() => {
-    const cargarDatosReferencia = async () => {
-      try {
-        setLoadingData(true);
-        
-        // Cargar profesiones y niveles desde el backend
-        const [profesionesResponse, nivelesResponse] = await Promise.all([
-          fetch('/api/auth/profesiones'),
-          fetch('/api/auth/niveles')
-        ]);
-
-        if (profesionesResponse.ok) {
-          const profesionesData = await profesionesResponse.json();
-          setProfesiones(profesionesData.data || []);
-        }
-
-        if (nivelesResponse.ok) {
-          const nivelesData = await nivelesResponse.json();
-          setNiveles(nivelesData.data || []);
-          setNivelesFiltrados(nivelesData.data || []);
-        }
-      } catch (error) {
-        console.error('Error cargando datos de referencia:', error);
-      } finally {
-        setLoadingData(false);
-      }
-    };
-
-    cargarDatosReferencia();
+    setLoadingData(true);
+    setProfesiones([]);
+    setNiveles([]);
+    setNivelesFiltrados([]);
+    setLoadingData(false);
   }, []);
 
   // Filtrar niveles según la profesión seleccionada

@@ -14,8 +14,8 @@ export const useSyncData = (dataType, filters = {}, options = {}) => {
   const [lastSync, setLastSync] = useState(null);
 
   const {
-    autoSync = true,
-    syncInterval = 5 * 60 * 1000, // 5 minutos
+    autoSync = false,
+    syncInterval = 30 * 60 * 1000, // 30 minutos por defecto
     cacheEnabled = true
   } = options;
 
@@ -80,14 +80,14 @@ export const useSyncData = (dataType, filters = {}, options = {}) => {
     }
   }, [dataType, filters, options]);
 
-  // Sincronización automática
+  // Sincronización automática (desactivada por defecto)
   useEffect(() => {
     if (autoSync && dataType) {
       syncData();
     }
   }, [dataType, autoSync, syncData]);
 
-  // Sincronización periódica
+  // Sincronización periódica (cada 30 minutos por defecto)
   useEffect(() => {
     if (!autoSync || !syncInterval) return;
 

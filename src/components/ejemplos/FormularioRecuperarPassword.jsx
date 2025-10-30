@@ -6,16 +6,19 @@ import csdtApiService from '../../services/csdtApiService';
 /**
  * Componente para recuperar contraseña
  * Compatible con el backend Laravel
- * Usa email y documento para verificar identidad
+ * Permite recuperar por número de documento (cédula) o por correo
+ * Soporta opcionalmente un código 2FA si el usuario lo tiene activo
  */
 const FormularioRecuperarPassword = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [metodo, setMetodo] = useState('documento'); // 'documento' | 'email'
   const [formData, setFormData] = useState({
+    documento: '',
     email: '',
-    documento: ''
+    codigo: '' // opcional TOTP
   });
 
   // Limpiar error cuando el usuario empieza a escribir
@@ -36,44 +39,48 @@ const FormularioRecuperarPassword = () => {
     }
   };
 
-  // Validar email
-  const validarEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validaciones del frontend
     const nuevosErrores = {};
 
-    // Validar email
-    if (!formData.email.trim()) {
-      nuevosErrores.email = 'El correo electrónico es obligatorio';
-    } else if (!validarEmail(formData.email)) {
-      nuevosErrores.email = 'El correo electrónico no es válido';
-    }
-
-    // Validar documento
-    if (!formData.documento.trim()) {
-      nuevosErrores.documento = 'El número de documento es obligatorio';
+    if (metodo === 'documento') {
+      if (!formData.documento.trim()) {
+        nuevosErrores.documento = 'El número de documento es obligatorio';
+      } else if (!/^\d{5,15}$/.test(formData.documento.trim())) {
+        nuevosErrores.documento = 'Ingresa solo números (5 a 15 dígitos)';
+      }
+    } else {
+      // email
+      if (!formData.email.trim()) {
+        nuevosErrores.email = 'El correo electrónico es obligatorio';
+      } else {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(formData.email.trim())) {
+          nuevosErrores.email = 'El correo electrónico no es válido';
+        }
+      }
     }
 
     // Si hay errores, mostrarlos y detener
     if (Object.keys(nuevosErrores).length > 0) {
       setErrors(nuevosErrores);
-      toast.error('Por favor completa todos los campos correctamente');
+      toast.error('Por favor corrige los campos marcados');
       return;
     }
 
     setLoading(true);
 
     try {
-      const response = await csdtApiService.post('/auth/recuperar-contrasena', {
-        email: formData.email.toLowerCase().trim(),
-        documento: formData.documento.trim()
-      });
+      const payload = metodo === 'documento'
+        ? { documento: formData.documento.trim() }
+        : { email: formData.email.trim().toLowerCase() };
+      if (formData.codigo.trim()) {
+        payload.code = formData.codigo.trim();
+      }
+
+      const response = await csdtApiService.post('/auth/recuperar-contrasena', payload);
       
       if (response.data.success) {
         setSuccess(true);
@@ -149,63 +156,107 @@ const FormularioRecuperarPassword = () => {
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-2">Recuperar Contraseña</h2>
       <p className="text-sm text-gray-600 mb-6">
-        Ingresa tu correo electrónico y número de documento para recuperar tu contraseña
+        Selecciona un método y solicita el restablecimiento (la nueva contraseña será tu cédula)
       </p>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Email */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Correo Electrónico <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-              errors.email 
-                ? 'border-red-500 focus:ring-red-500' 
-                : 'border-gray-300 focus:ring-blue-500'
-            }`}
-            placeholder="correo@ejemplo.com"
-            required
-            autoComplete="email"
-          />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">
-              {Array.isArray(errors.email) ? errors.email[0] : errors.email}
-            </p>
-          )}
-        </div>
+      {/* Selector de método */}
+      <div className="flex gap-2 mb-3">
+        <button
+          type="button"
+          onClick={() => { setMetodo('documento'); setErrors({}); }}
+          className={`px-3 py-2 rounded-md text-sm border ${metodo === 'documento' ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-50 text-gray-700 border-gray-300'}`}
+        >
+          Por Documento
+        </button>
+        <button
+          type="button"
+          onClick={() => { setMetodo('email'); setErrors({}); }}
+          className={`px-3 py-2 rounded-md text-sm border ${metodo === 'email' ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-50 text-gray-700 border-gray-300'}`}
+        >
+          Por Correo
+        </button>
+      </div>
 
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Documento */}
+        {metodo === 'documento' ? (
+          <div>
+            <label htmlFor="documento" className="block text-sm font-medium text-gray-700 mb-1">
+              Número de Documento <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="documento"
+              name="documento"
+              inputMode="numeric"
+              value={formData.documento}
+              onChange={(e) => handleChange({ target: { name: 'documento', value: e.target.value.replace(/\D/g, '') } })}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.documento 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-300 focus:ring-blue-500'
+              }`}
+              placeholder="1234567890"
+              required
+            />
+            {errors.documento && (
+              <p className="mt-1 text-sm text-red-600">
+                {Array.isArray(errors.documento) ? errors.documento[0] : errors.documento}
+              </p>
+            )}
+            <p className="mt-1 text-xs text-gray-500">
+              Ingresa el número de documento con el que te registraste
+            </p>
+          </div>
+        ) : (
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Correo electrónico <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                errors.email 
+                  ? 'border-red-500 focus:ring-red-500' 
+                  : 'border-gray-300 focus:ring-blue-500'
+              }`}
+              placeholder="correo@ejemplo.com"
+              required
+              autoComplete="email"
+            />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600">
+                {Array.isArray(errors.email) ? errors.email[0] : errors.email}
+              </p>
+            )}
+            <p className="mt-1 text-xs text-gray-500">
+              Te enviaremos instrucciones al correo registrado
+            </p>
+          </div>
+        )}
+
+        {/* Código 2FA opcional */}
         <div>
-          <label htmlFor="documento" className="block text-sm font-medium text-gray-700 mb-1">
-            Número de Documento <span className="text-red-500">*</span>
+          <label htmlFor="codigo" className="block text-sm font-medium text-gray-700 mb-1">
+            Código 2FA (opcional)
           </label>
           <input
             type="text"
-            id="documento"
-            name="documento"
-            value={formData.documento}
+            id="codigo"
+            name="codigo"
+            value={formData.codigo}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-              errors.documento 
-                ? 'border-red-500 focus:ring-red-500' 
-                : 'border-gray-300 focus:ring-blue-500'
-            }`}
-            placeholder="1234567890"
-            required
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
+            placeholder="123456"
+            inputMode="numeric"
+            maxLength={6}
           />
-          {errors.documento && (
-            <p className="mt-1 text-sm text-red-600">
-              {Array.isArray(errors.documento) ? errors.documento[0] : errors.documento}
-            </p>
-          )}
           <p className="mt-1 text-xs text-gray-500">
-            Ingresa el número de documento con el que te registraste
+            Si tienes 2FA activo, ingresa el código de tu app autenticadora
           </p>
         </div>
 
@@ -219,7 +270,7 @@ const FormularioRecuperarPassword = () => {
               : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
           }`}
         >
-          {loading ? 'Recuperando contraseña...' : 'Recuperar Contraseña'}
+          {loading ? 'Procesando...' : 'Restablecer'}
         </button>
       </form>
 
@@ -233,10 +284,10 @@ const FormularioRecuperarPassword = () => {
       <div className="mt-6 p-4 bg-yellow-50 rounded-md">
         <p className="text-sm font-medium text-yellow-800 mb-2">Información importante:</p>
         <ul className="text-xs text-yellow-700 space-y-1">
-          <li>• El correo y documento deben coincidir con tu registro</li>
-          <li>• Tu nueva contraseña será tu número de documento</li>
+          <li>• Si eliges documento, tu nueva contraseña será tu número de documento</li>
+          <li>• Si eliges correo, recibirás instrucciones para el restablecimiento</li>
           <li>• Después de recuperarla, cámbiala por una más segura</li>
-          <li>• Si no recuerdas tu documento, contacta al administrador</li>
+          <li>• Si no recuerdas tu documento o correo, contacta al administrador</li>
         </ul>
       </div>
     </div>

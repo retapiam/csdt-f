@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, LayersControl } from 'react-leaflet';
+import { MAP_CONFIG, MAP_PROVIDERS, MAP_WMS, CRS_CONFIG } from '../../config/config';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -17,7 +18,8 @@ const MapaInteractivo = ({
   marcadores = [],
   altura = '400px',
   onMarcadorClick = null,
-  mostrarControles = true
+  mostrarControles = true,
+  capaBase = 'auto' // 'auto' | 'libre' | 'osm' | 'mapbox' | 'mapbox_sat' | 'esri' | 'yandex' | 'maxar' | 'custom' | 'wms' | 'carto_light' | 'carto_dark' | 'opentopo' | 'wikimedia'
 }) => {
   const [mapa, setMapa] = useState(null);
 
@@ -60,6 +62,13 @@ const MapaInteractivo = ({
     }
   };
 
+  // Determinar si usar Mapbox o OSM según disponibilidad de token
+  const usarMapbox = Boolean(MAP_CONFIG.MAPBOX_TOKEN);
+
+  // Opciones de rendimiento
+  const mapPerformanceProps = { preferCanvas: true };
+  const tilePerformanceProps = { updateWhenIdle: true, keepBuffer: 2, crossOrigin: true };
+
   return (
     <div className="w-full" style={{ height: altura }}>
       <MapContainer
@@ -67,11 +76,150 @@ const MapaInteractivo = ({
         zoom={zoom}
         style={{ height: '100%', width: '100%' }}
         whenCreated={setMapa}
+        {...mapPerformanceProps}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <LayersControl position="topright">
+          <LayersControl.BaseLayer
+            checked={capaBase === 'osm' || (capaBase === 'auto' && !usarMapbox)}
+            name="OpenStreetMap"
+          >
+            <TileLayer
+              attribution={MAP_CONFIG.OSM_ATTRIBUTION}
+              url={MAP_CONFIG.OSM_TILE_URL}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer
+            checked={capaBase === 'libre'}
+            name="Libre (OSM)"
+          >
+            <TileLayer
+              attribution={MAP_CONFIG.OSM_ATTRIBUTION}
+              url={MAP_CONFIG.OSM_TILE_URL}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer
+            checked={capaBase === 'mapbox' || (capaBase === 'auto' && usarMapbox)}
+            name="Mapbox Streets"
+          >
+            <TileLayer
+              attribution={MAP_CONFIG.ATTRIBUTION}
+              url={MAP_CONFIG.TILE_URL(MAP_CONFIG.MAPBOX_TOKEN, MAP_CONFIG.MAPBOX_STYLE)}
+              tileSize={MAP_CONFIG.TILE_SIZE}
+              zoomOffset={MAP_CONFIG.ZOOM_OFFSET}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer
+            checked={capaBase === 'mapbox_sat'}
+            name="Mapbox Satellite"
+          >
+            <TileLayer
+              attribution={MAP_PROVIDERS.MAPBOX_SATELLITE(MAP_CONFIG.MAPBOX_TOKEN).attribution}
+              url={MAP_PROVIDERS.MAPBOX_SATELLITE(MAP_CONFIG.MAPBOX_TOKEN).url}
+              tileSize={MAP_PROVIDERS.MAPBOX_SATELLITE(MAP_CONFIG.MAPBOX_TOKEN).tileSize}
+              zoomOffset={MAP_PROVIDERS.MAPBOX_SATELLITE(MAP_CONFIG.MAPBOX_TOKEN).zoomOffset}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer
+            checked={capaBase === 'esri'}
+            name="Esri World Imagery"
+          >
+            <TileLayer
+              attribution={MAP_PROVIDERS.ESRI_WORLD_IMAGERY.attribution}
+              url={MAP_PROVIDERS.ESRI_WORLD_IMAGERY.url}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          {MAP_PROVIDERS.YANDEX.url && (
+            <LayersControl.BaseLayer
+              checked={capaBase === 'yandex'}
+              name="Yandex"
+            >
+              <TileLayer
+                attribution={MAP_PROVIDERS.YANDEX.attribution}
+                url={MAP_PROVIDERS.YANDEX.url}
+                {...tilePerformanceProps}
+              />
+            </LayersControl.BaseLayer>
+          )}
+
+          {MAP_PROVIDERS.MAXAR.url && (
+            <LayersControl.BaseLayer
+              checked={capaBase === 'maxar'}
+              name="Maxar"
+            >
+              <TileLayer
+                attribution={MAP_PROVIDERS.MAXAR.attribution}
+                url={MAP_PROVIDERS.MAXAR.url}
+                {...tilePerformanceProps}
+              />
+            </LayersControl.BaseLayer>
+          )}
+
+          {MAP_PROVIDERS.CUSTOM_XYZ.url && (
+            <LayersControl.BaseLayer
+              checked={capaBase === 'custom'}
+              name="Custom XYZ"
+            >
+              <TileLayer
+                attribution={MAP_PROVIDERS.CUSTOM_XYZ.attribution}
+                url={MAP_PROVIDERS.CUSTOM_XYZ.url}
+                {...tilePerformanceProps}
+              />
+            </LayersControl.BaseLayer>
+          )}
+
+          {MAP_WMS.URL && (
+            <LayersControl.Overlay checked={capaBase === 'wms'} name="WMS">
+              {/* Para WMS en react-leaflet, se recomienda leaflet.wms o usar WMTS con TileLayer. Simplificamos si es WMTS XYZ compatible */}
+              <TileLayer
+                attribution={MAP_WMS.ATTRIBUTION}
+                url={`${MAP_WMS.URL}`}
+                {...tilePerformanceProps}
+              />
+            </LayersControl.Overlay>
+          )}
+
+          <LayersControl.BaseLayer checked={capaBase === 'carto_light'} name="Carto Positron">
+            <TileLayer
+              attribution={MAP_PROVIDERS.CARTO_POSITRON.attribution}
+              url={MAP_PROVIDERS.CARTO_POSITRON.url}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer checked={capaBase === 'carto_dark'} name="Carto Dark Matter">
+            <TileLayer
+              attribution={MAP_PROVIDERS.CARTO_DARK_MATTER.attribution}
+              url={MAP_PROVIDERS.CARTO_DARK_MATTER.url}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer checked={capaBase === 'opentopo'} name="OpenTopoMap">
+            <TileLayer
+              attribution={MAP_PROVIDERS.OPENTOPOMAP.attribution}
+              url={MAP_PROVIDERS.OPENTOPOMAP.url}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+
+          <LayersControl.BaseLayer checked={capaBase === 'wikimedia'} name="Wikimedia OSM">
+            <TileLayer
+              attribution={MAP_PROVIDERS.WIKIMEDIA.attribution}
+              url={MAP_PROVIDERS.WIKIMEDIA.url}
+              {...tilePerformanceProps}
+            />
+          </LayersControl.BaseLayer>
+        </LayersControl>
         
         <CentrarMapa center={center} zoom={zoom} />
         <ManejadorClics onClic={onMarcadorClick} />

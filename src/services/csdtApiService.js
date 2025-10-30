@@ -4,13 +4,14 @@
  * Compatible con el backend Laravel
  */
 import api from './api';
+import { API_ENDPOINTS } from '../config/config';
 
 class CsdtApiService {
   // Autenticación
   auth = {
     login: async (credentials) => {
       try {
-        return await api.post('/auth/login', credentials);
+        return await api.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
       } catch (error) {
         throw error;
       }
@@ -18,7 +19,7 @@ class CsdtApiService {
     
     register: async (userData) => {
       try {
-        return await api.post('/auth/register', userData);
+        return await api.post(API_ENDPOINTS.AUTH.REGISTER, userData);
       } catch (error) {
         throw error;
       }
@@ -26,7 +27,7 @@ class CsdtApiService {
     
     logout: async () => {
       try {
-        return await api.post('/auth/logout');
+        return await api.post(API_ENDPOINTS.AUTH.LOGOUT);
       } catch (error) {
         throw error;
       }
@@ -34,7 +35,7 @@ class CsdtApiService {
     
     me: async () => {
       try {
-        return await api.get('/auth/me');
+        return await api.get(API_ENDPOINTS.AUTH.ME);
       } catch (error) {
         throw error;
       }
@@ -42,7 +43,7 @@ class CsdtApiService {
     
     getCurrentUser: async () => {
       try {
-        return await api.get('/auth/me');
+        return await api.get(API_ENDPOINTS.AUTH.ME);
       } catch (error) {
         throw error;
       }
@@ -50,7 +51,7 @@ class CsdtApiService {
     
     updateProfile: async (userData) => {
       try {
-        return await api.put('/auth/profile', userData);
+        return await api.put(API_ENDPOINTS.AUTH.UPDATE_PROFILE, userData);
       } catch (error) {
         throw error;
       }
@@ -58,7 +59,7 @@ class CsdtApiService {
     
     changePassword: async (passwordData) => {
       try {
-        return await api.post('/auth/change-password', passwordData);
+        return await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, passwordData);
       } catch (error) {
         throw error;
       }
@@ -66,7 +67,7 @@ class CsdtApiService {
     
     cambiarContrasena: async (passwordData) => {
       try {
-        return await api.post('/auth/change-password', passwordData);
+        return await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, passwordData);
       } catch (error) {
         throw error;
       }
@@ -74,7 +75,7 @@ class CsdtApiService {
     
     update: async (userData) => {
       try {
-        return await api.put('/auth/profile', userData);
+        return await api.put(API_ENDPOINTS.AUTH.UPDATE_PROFILE, userData);
       } catch (error) {
         throw error;
       }
@@ -101,7 +102,7 @@ class CsdtApiService {
   users = {
     getAll: async () => {
       try {
-        return await api.get('/users');
+        return await api.get(API_ENDPOINTS.USERS.BASE);
       } catch (error) {
         throw error;
       }
@@ -109,7 +110,7 @@ class CsdtApiService {
     
     getById: async (id) => {
       try {
-        return await api.get(`/users/${id}`);
+        return await api.get(API_ENDPOINTS.USERS.BY_ID(id));
       } catch (error) {
         throw error;
       }
@@ -117,7 +118,7 @@ class CsdtApiService {
     
     create: async (userData) => {
       try {
-        return await api.post('/users', userData);
+        return await api.post(API_ENDPOINTS.USERS.BASE, userData);
       } catch (error) {
         throw error;
       }
@@ -125,7 +126,7 @@ class CsdtApiService {
     
     update: async (id, userData) => {
       try {
-        return await api.put(`/users/${id}`, userData);
+        return await api.put(API_ENDPOINTS.USERS.BY_ID(id), userData);
       } catch (error) {
         throw error;
       }
@@ -133,45 +134,31 @@ class CsdtApiService {
     
     delete: async (id) => {
       try {
-        return await api.delete(`/users/${id}`);
+        return await api.delete(API_ENDPOINTS.USERS.BY_ID(id));
       } catch (error) {
         throw error;
       }
     }
   };
 
-  // Permisos
-  permissions = {
-    getAll: async () => {
-      try {
-        return await api.get('/permissions');
-      } catch (error) {
-        throw error;
-      }
-    },
-    
-    getUserPermissions: async (userId) => {
-      try {
-        return await api.get(`/permissions/user/${userId}`);
-      } catch (error) {
-        throw error;
-      }
-    },
-    
-    updateUserPermissions: async (userId, permissions) => {
-      try {
-        return await api.post(`/permissions/user/${userId}`, { permissions });
-      } catch (error) {
-        throw error;
-      }
-    }
+  // Permisos (alineado a backend /permisos/*)
+  permisos = {
+    listarPorUsuario: async (userId) => api.get(`/permisos/usuario/${userId}`),
+    verificar: async (userId, tipoPermiso) => api.get(`/permisos/verificar/${userId}/${tipoPermiso}`),
+    permisosPorRol: async (rol) => api.get(`/permisos/rol/${rol}`),
+    otorgar: async (payload) => api.post('/permisos/otorgar', payload),
+    actualizar: async (permisoId, payload) => api.put(`/permisos/${permisoId}`, payload),
+    vetar: async (permisoId) => api.post(`/permisos/${permisoId}/vetar`),
+    activar: async (permisoId) => api.post(`/permisos/${permisoId}/activar`),
+    eliminar: async (permisoId) => api.delete(`/permisos/${permisoId}`),
+    historial: async (permisoId) => api.get(`/permisos/${permisoId}/historial`)
   };
 
-  // Proyectos
-  projects = {
+  // Proyectos (apiResource 'proyectos')
+  proyectos = {
     getAll: async () => {
       try {
-        return await api.get('/projects');
+        return await api.get(API_ENDPOINTS.PROJECTS.BASE);
       } catch (error) {
         throw error;
       }
@@ -179,7 +166,7 @@ class CsdtApiService {
     
     getById: async (id) => {
       try {
-        return await api.get(`/projects/${id}`);
+        return await api.get(API_ENDPOINTS.PROJECTS.BY_ID(id));
       } catch (error) {
         throw error;
       }
@@ -187,7 +174,7 @@ class CsdtApiService {
     
     create: async (projectData) => {
       try {
-        return await api.post('/projects', projectData);
+        return await api.post(API_ENDPOINTS.PROJECTS.BASE, projectData);
       } catch (error) {
         throw error;
       }
@@ -195,7 +182,7 @@ class CsdtApiService {
     
     update: async (id, projectData) => {
       try {
-        return await api.put(`/projects/${id}`, projectData);
+        return await api.put(API_ENDPOINTS.PROJECTS.BY_ID(id), projectData);
       } catch (error) {
         throw error;
       }
@@ -203,18 +190,18 @@ class CsdtApiService {
     
     delete: async (id) => {
       try {
-        return await api.delete(`/projects/${id}`);
+        return await api.delete(API_ENDPOINTS.PROJECTS.BY_ID(id));
       } catch (error) {
         throw error;
       }
     }
   };
 
-  // Casos
-  cases = {
+  // Casos Legales (apiResource 'casos-legales')
+  casosLegales = {
     getAll: async () => {
       try {
-        return await api.get('/cases');
+        return await api.get(API_ENDPOINTS.LEGAL_CASES.BASE);
       } catch (error) {
         throw error;
       }
@@ -222,7 +209,7 @@ class CsdtApiService {
     
     getById: async (id) => {
       try {
-        return await api.get(`/cases/${id}`);
+        return await api.get(API_ENDPOINTS.LEGAL_CASES.BY_ID(id));
       } catch (error) {
         throw error;
       }
@@ -230,7 +217,7 @@ class CsdtApiService {
     
     create: async (caseData) => {
       try {
-        return await api.post('/cases', caseData);
+        return await api.post(API_ENDPOINTS.LEGAL_CASES.BASE, caseData);
       } catch (error) {
         throw error;
       }
@@ -238,30 +225,58 @@ class CsdtApiService {
     
     update: async (id, caseData) => {
       try {
-        return await api.put(`/cases/${id}`, caseData);
+        return await api.put(API_ENDPOINTS.LEGAL_CASES.BY_ID(id), caseData);
       } catch (error) {
         throw error;
       }
     }
   };
 
-  // IA
-  ia = {
-    analyze: async (text, options = {}) => {
-      try {
-        return await api.post('/ia/analyze', { text, ...options });
-      } catch (error) {
-        throw error;
-      }
+  // Derechos Étnicos (prefix 'etnicos')
+  etnicos = {
+    pueblosIndigenas: {
+      listar: async () => api.get('/etnicos/pueblos-indigenas'),
+      obtener: async (id) => api.get(`/etnicos/pueblos-indigenas/${id}`),
+      crear: async (data) => api.post('/etnicos/pueblos-indigenas', data),
+      actualizar: async (id, data) => api.put(`/etnicos/pueblos-indigenas/${id}`, data),
+      eliminar: async (id) => api.delete(`/etnicos/pueblos-indigenas/${id}`)
     },
-    
-    generateResponse: async (text, context = {}) => {
-      try {
-        return await api.post('/ia/generate-response', { text, context });
-      } catch (error) {
-        throw error;
-      }
+    comunidadesAfro: {
+      listar: async () => api.get('/etnicos/comunidades-afro'),
+      obtener: async (id) => api.get(`/etnicos/comunidades-afro/${id}`),
+      crear: async (data) => api.post('/etnicos/comunidades-afro', data),
+      actualizar: async (id, data) => api.put(`/etnicos/comunidades-afro/${id}`, data),
+      eliminar: async (id) => api.delete(`/etnicos/comunidades-afro/${id}`)
+    },
+    consultasPrevias: {
+      listar: async () => api.get('/etnicos/consultas-previas'),
+      obtener: async (id) => api.get(`/etnicos/consultas-previas/${id}`),
+      crear: async (data) => api.post('/etnicos/consultas-previas', data),
+      actualizar: async (id, data) => api.put(`/etnicos/consultas-previas/${id}`, data),
+      eliminar: async (id) => api.delete(`/etnicos/consultas-previas/${id}`)
     }
+  };
+
+  // IA (prefix 'ia')
+  ia = {
+    analizarJuridico: async (text, options = {}) => api.post('/ia/analizar-juridico', { text, ...options }),
+    analizarEtnico: async (text, options = {}) => api.post('/ia/analizar-etnico', { text, ...options }),
+    analizarVeeduria: async (text, options = {}) => api.post('/ia/analizar-veeduria', { text, ...options }),
+    consultasListar: async () => api.get('/ia/consultas'),
+    consultaPorId: async (id) => api.get(`/ia/consultas/${id}`),
+    estadisticasCentro: async () => api.get('/ia/estadisticas-centro'),
+    estadisticasMonitor: async () => api.get('/ia/estadisticas-monitor'),
+    metricasRendimiento: async () => api.get('/ia/metricas-rendimiento'),
+    serviciosEstado: async () => api.get('/ia/servicios-estado'),
+    // Compat: algunos scripts esperan ia.especialistas.listar()
+    especialistas: {
+      listar: async () => api.get('/ia/consultas')
+    }
+  };
+
+  // Dashboard sencillo protegido (backend /dashboard)
+  dashboard = {
+    get: async () => api.get('/dashboard')
   };
 
   // Método auxiliar para hacer POST genérico

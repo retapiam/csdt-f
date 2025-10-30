@@ -47,6 +47,9 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { usePermisosVista } from '../../../contexts/PermisosVistaContext';
 import { useProyectos, useTareas, useEstadisticasProyectos } from '../../../hooks/useProyectos';
 import ProteccionRol from '../../../components/compartidas/ProteccionRol';
+import unifiedAIService from '../../../services/ia/UnifiedAIService';
+import pdfAvanzadoService from '../../../services/pdf/PDFAvanzadoService';
+import toast from 'react-hot-toast';
 
 const DashboardCliente = ({ modoSoloLectura = false, permisos = {} }) => {
   const { user, isAuthenticated } = useAuth();
@@ -58,21 +61,21 @@ const DashboardCliente = ({ modoSoloLectura = false, permisos = {} }) => {
     loading: cargandoProyectos, 
     error: errorProyectos,
     refresh: refreshProyectos
-  } = useProyectos({}, { autoSync: true });
+  } = useProyectos({}, { autoSync: false });
 
   const { 
     tareas: tareasCliente, 
     loading: cargandoTareas, 
     error: errorTareas,
     refresh: refreshTareas
-  } = useTareas({}, { autoSync: true });
+  } = useTareas({}, { autoSync: false });
 
   const { 
     estadisticas, 
     loading: cargandoEstadisticas, 
     error: errorEstadisticas,
     refresh: refreshEstadisticas
-  } = useEstadisticasProyectos({ autoSync: true });
+  } = useEstadisticasProyectos({ autoSync: false });
 
   const [documentosRequeridos, setDocumentosRequeridos] = useState([]);
   const [mensajesRecibidos, setMensajesRecibidos] = useState([]);
@@ -145,6 +148,36 @@ const DashboardCliente = ({ modoSoloLectura = false, permisos = {} }) => {
       day: 'numeric'
     });
   };
+
+  const handleConsultarIAProyecto = async (proyecto) => {
+    try {
+      const texto = `${proyecto.nombre} - ${proyecto.descripcion || ''}`;
+      const result = await unifiedAIService.quickAnalyze({ text: texto, legal_area: 'Derecho General', jurisdiction: 'colombia' });
+      toast.success('IA analizó el proyecto');
+      console.log('IA proyecto', result);
+    } catch (e) {
+      toast.error('Error consultando IA');
+    }
+  };
+
+  const handleGenerarPDFProyecto = async (proyecto) => {
+    try {
+      const datos = { titulo: `Resumen Proyecto - ${proyecto.nombre}`, resumen: proyecto.descripcion || 'Resumen', puntos_clave: ['Estado', 'Avances', 'Próximos pasos'] };
+      const pdf = await pdfAvanzadoService.generarPDFAvanzado(datos, { plantilla: 'resumen_ejecutivo', estilo: 'oficial' });
+      pdf.archivo.documento.save(pdf.archivo.nombre);
+      toast.success('PDF generado');
+    } catch (e) {
+      toast.error('Error generando PDF');
+    }
+  };
+
+  // Normalizar colecciones a arrays seguros
+  const listaProyectos = Array.isArray(proyectosCliente)
+    ? proyectosCliente
+    : (Array.isArray(proyectosCliente?.data) ? proyectosCliente.data : []);
+  const listaTareas = Array.isArray(tareasCliente)
+    ? tareasCliente
+    : (Array.isArray(tareasCliente?.data) ? tareasCliente.data : []);
 
   if (cargando) {
     return (
@@ -298,7 +331,7 @@ const DashboardCliente = ({ modoSoloLectura = false, permisos = {} }) => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {proyectosCliente?.map((proyecto) => (
+                {listaProyectos.map((proyecto) => (
                   <div key={proyecto.id} className="border rounded-lg p-4">
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
@@ -315,6 +348,12 @@ const DashboardCliente = ({ modoSoloLectura = false, permisos = {} }) => {
                       </div>
                       <Button variant="outline" size="sm">
                         <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button variant="outline" size="sm" title="Consultar IA" onClick={() => handleConsultarIAProyecto(proyecto)}>
+                        🤖
+                      </Button>
+                      <Button variant="outline" size="sm" title="Exportar PDF" onClick={() => handleGenerarPDFProyecto(proyecto)}>
+                        <Download className="h-4 w-4" />
                       </Button>
                     </div>
                     <div className="space-y-2">
@@ -336,11 +375,11 @@ const DashboardCliente = ({ modoSoloLectura = false, permisos = {} }) => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Mis Tareas</CardTitle>
+              <CardTitle>Mis Colas</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {tareasCliente?.map((tarea) => (
+                {listaTareas.map((tarea) => (
                   <div key={tarea.id} className="border rounded-lg p-4">
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">

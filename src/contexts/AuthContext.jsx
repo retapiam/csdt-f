@@ -56,7 +56,8 @@ export const AuthProvider = ({ children }) => {
     
     try {
       const result = await AuthServiceUnificado.login(email, password);
-      setUser(result.user);
+      const usuario = result.user || result.data?.user;
+      setUser(usuario || null);
       return result;
     } catch (error) {
       console.error('Error en login:', error);

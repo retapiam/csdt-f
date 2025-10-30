@@ -11,6 +11,7 @@ import MenuPrincipal from './components/compartidas/MenuPrincipal';
 import Footer from './components/Footer';
 import PageWrapper from './components/compartidas/PageWrapper';
 import ProtectedRouteWithPermisos from './components/compartidas/ProtectedRouteWithPermisos';
+import ServiciosCompartidosLayout from './components/compartidas/ServiciosCompartidosLayout';
 
 // Componente de Error Boundary para capturar errores en las páginas
 class ErrorBoundary extends React.Component {
@@ -103,6 +104,7 @@ const Institucional = lazy(() => import('./paginas/09-gestion-institucional/01-i
 const Proyectos = lazy(() => import('./paginas/09-gestion-institucional/02-proyectos/Proyectos'));
 const Donaciones = lazy(() => import('./paginas/09-gestion-institucional/03-donaciones/Donaciones'));
 const Dashboard = lazy(() => import('./paginas/09-gestion-institucional/04-dashboard/Dashboard'));
+const ConfiguracionSistema = lazy(() => import('./paginas/09-gestion-institucional/ConfiguracionSistema'));
 
 // ========================================
 // ACCIONES CONSTITUCIONALES
@@ -214,52 +216,52 @@ const HerramientasIA = lazy(() => import('./paginas/01-innovacion-ia/16-herramie
 // ========================================
 // SERVICIOS COMPARTIDOS
 // ========================================
-const Contacto = lazy(() => import('./paginas/10-servicios-compartidos/01-contacto/Contacto'));
-const Ayuda = lazy(() => import('./paginas/10-servicios-compartidos/02-ayuda/Ayuda'));
-const Documentos = lazy(() => import('./paginas/10-servicios-compartidos/03-documentos/Documentos'));
-const Noticias = lazy(() => import('./paginas/10-servicios-compartidos/04-noticias/Noticias'));
-const Perfil = lazy(() => import('./paginas/10-servicios-compartidos/05-perfil/Perfil'));
-const Terminos = lazy(() => import('./paginas/10-servicios-compartidos/06-terminos/Terminos'));
-const ConvocatoriasPublicas = lazy(() => import('./paginas/10-servicios-compartidos/07-convocatorias/ConvocatoriasPublicas'));
+const Contacto = lazy(() => import('./paginas/11-servicios-compartidos/01-contacto/Contacto'));
+const Ayuda = lazy(() => import('./paginas/11-servicios-compartidos/02-ayuda/Ayuda'));
+const Documentos = lazy(() => import('./paginas/11-servicios-compartidos/03-documentos/Documentos'));
+const Noticias = lazy(() => import('./paginas/11-servicios-compartidos/04-noticias/Noticias'));
+const Perfil = lazy(() => import('./paginas/11-servicios-compartidos/05-perfil/Perfil'));
+const Terminos = lazy(() => import('./paginas/11-servicios-compartidos/06-terminos/Terminos'));
+const ConvocatoriasPublicas = lazy(() => import('./paginas/11-servicios-compartidos/07-convocatorias/ConvocatoriasPublicas'));
 
 // ========================================
 // DICTÁMENES Y PERITAJES
 // ========================================
 // 01 - Reconocimiento Territorial
-const ReconocimientoDirecto = lazy(() => import('./paginas/11-dictamenes-peritajes/01-reconocimiento-territorial/01-directo/ReconocimientoDirecto'));
-const ReconocimientoIndirecto = lazy(() => import('./paginas/11-dictamenes-peritajes/01-reconocimiento-territorial/02-indirecto/ReconocimientoIndirecto'));
-const ReconocimientoSocial = lazy(() => import('./paginas/11-dictamenes-peritajes/01-reconocimiento-territorial/03-social/ReconocimientoSocial'));
-const TimelineTerritorial = lazy(() => import('./paginas/11-dictamenes-peritajes/01-reconocimiento-territorial/04-timeline/TimelineTerritorial'));
-const GestionConflictos = lazy(() => import('./paginas/11-dictamenes-peritajes/01-reconocimiento-territorial/05-conflictos/GestionConflictos'));
+const ReconocimientoDirecto = lazy(() => import('./paginas/10-distamesnes-peritajes/01-reconocimiento-territorial/01-directo/ReconocimientoDirecto'));
+const ReconocimientoIndirecto = lazy(() => import('./paginas/10-distamesnes-peritajes/01-reconocimiento-territorial/02-indirecto/ReconocimientoIndirecto'));
+const ReconocimientoSocial = lazy(() => import('./paginas/10-distamesnes-peritajes/01-reconocimiento-territorial/03-social/ReconocimientoSocial'));
+const TimelineTerritorial = lazy(() => import('./paginas/10-distamesnes-peritajes/01-reconocimiento-territorial/04-timeline/TimelineTerritorial'));
+const GestionConflictos = lazy(() => import('./paginas/10-distamesnes-peritajes/01-reconocimiento-territorial/05-conflictos/GestionConflictos'));
 
 // 02 - Catastro Predial
-const CatastroComunitario = lazy(() => import('./paginas/11-dictamenes-peritajes/02-catastro-predial/01-comunitario/CatastroComunitario'));
-const CatastroParticipativo = lazy(() => import('./paginas/11-dictamenes-peritajes/02-catastro-predial/02-participativo/CatastroParticipativo'));
-const CatastroIndirecto = lazy(() => import('./paginas/11-dictamenes-peritajes/02-catastro-predial/03-indirecto/CatastroIndirecto'));
-const ComparativoCatastral = lazy(() => import('./paginas/11-dictamenes-peritajes/02-catastro-predial/04-comparativo/ComparativoCatastral'));
+const CatastroComunitario = lazy(() => import('./paginas/10-distamesnes-peritajes/02-catastro-predial/01-comunitario/CatastroComunitario'));
+const CatastroParticipativo = lazy(() => import('./paginas/10-distamesnes-peritajes/02-catastro-predial/02-participativo/CatastroParticipativo'));
+const CatastroIndirecto = lazy(() => import('./paginas/10-distamesnes-peritajes/02-catastro-predial/03-indirecto/CatastroIndirecto'));
+const ComparativoCatastral = lazy(() => import('./paginas/10-distamesnes-peritajes/02-catastro-predial/04-comparativo/ComparativoCatastral'));
 
 // 03 - Catastro Minero
-const MapaMineroNacional = lazy(() => import('./paginas/11-dictamenes-peritajes/03-catastro-minero/01-mapa-nacional/MapaMineroNacional'));
-const SuperposicionMinero = lazy(() => import('./paginas/11-dictamenes-peritajes/03-catastro-minero/02-superposicion/SuperposicionMinero'));
-const CertificadosMineros = lazy(() => import('./paginas/11-dictamenes-peritajes/03-catastro-minero/03-certificados/CertificadosMineros'));
-const ProyectosExtractivos = lazy(() => import('./paginas/11-dictamenes-peritajes/03-catastro-minero/04-proyectos/ProyectosExtractivos'));
+const MapaMineroNacional = lazy(() => import('./paginas/10-distamesnes-peritajes/03-catastro-minero/01-mapa-nacional/MapaMineroNacional'));
+const SuperposicionMinero = lazy(() => import('./paginas/10-distamesnes-peritajes/03-catastro-minero/02-superposicion/SuperposicionMinero'));
+const CertificadosMineros = lazy(() => import('./paginas/10-distamesnes-peritajes/03-catastro-minero/03-certificados/CertificadosMineros'));
+const ProyectosExtractivos = lazy(() => import('./paginas/10-distamesnes-peritajes/03-catastro-minero/04-proyectos/ProyectosExtractivos'));
 
 // 04 - Componente Ambiental
-const MapaAmbientalInteractivo = lazy(() => import('./paginas/11-dictamenes-peritajes/04-componente-ambiental/01-mapa-interactivo/MapaAmbientalInteractivo'));
-const DiagnosticoAmbiental = lazy(() => import('./paginas/11-dictamenes-peritajes/04-componente-ambiental/02-diagnostico/DiagnosticoAmbiental'));
-const ProyectosAmbientales = lazy(() => import('./paginas/11-dictamenes-peritajes/04-componente-ambiental/03-proyectos/ProyectosAmbientales'));
-const PlanesManejoAmbiental = lazy(() => import('./paginas/11-dictamenes-peritajes/04-componente-ambiental/04-planes/PlanesManejoAmbiental'));
+const MapaAmbientalInteractivo = lazy(() => import('./paginas/10-distamesnes-peritajes/04-componente-ambiental/01-mapa-interactivo/MapaAmbientalInteractivo'));
+const DiagnosticoAmbiental = lazy(() => import('./paginas/10-distamesnes-peritajes/04-componente-ambiental/02-diagnostico/DiagnosticoAmbiental'));
+const ProyectosAmbientales = lazy(() => import('./paginas/10-distamesnes-peritajes/04-componente-ambiental/03-proyectos/ProyectosAmbientales'));
+const PlanesManejoAmbiental = lazy(() => import('./paginas/10-distamesnes-peritajes/04-componente-ambiental/04-planes/PlanesManejoAmbiental'));
 
 // 05 - Dimensión Étnica
-const ConsultaPreviaDictamen = lazy(() => import('./paginas/11-dictamenes-peritajes/05-dimension-etnica/01-consulta-previa/ConsultaPrevia'));
-const CertificadosEtnicos = lazy(() => import('./paginas/11-dictamenes-peritajes/05-dimension-etnica/02-certificados/CertificadosEtnicos'));
-const AmpliacionSaneamiento = lazy(() => import('./paginas/11-dictamenes-peritajes/05-dimension-etnica/03-ampliacion/AmpliacionSaneamiento'));
+const ConsultaPreviaDictamen = lazy(() => import('./paginas/10-distamesnes-peritajes/05-dimension-etnica/01-consulta-previa/ConsultaPrevia'));
+const CertificadosEtnicos = lazy(() => import('./paginas/10-distamesnes-peritajes/05-dimension-etnica/02-certificados/CertificadosEtnicos'));
+const AmpliacionSaneamiento = lazy(() => import('./paginas/10-distamesnes-peritajes/05-dimension-etnica/03-ampliacion/AmpliacionSaneamiento'));
 
 // 06 - Dimensión Social
-const MapaCultural = lazy(() => import('./paginas/11-dictamenes-peritajes/06-dimension-social/01-mapa-cultural/MapaCultural'));
-const RepositorioSaberes = lazy(() => import('./paginas/11-dictamenes-peritajes/06-dimension-social/02-repositorio/RepositorioSaberes'));
-const TestimoniosMemoria = lazy(() => import('./paginas/11-dictamenes-peritajes/06-dimension-social/03-testimonios/TestimoniosMemoria'));
-const ParticipacionSocial = lazy(() => import('./paginas/11-dictamenes-peritajes/06-dimension-social/04-participacion/ParticipacionSocial'));
+const MapaCultural = lazy(() => import('./paginas/10-distamesnes-peritajes/06-dimension-social/01-mapa-cultural/MapaCultural'));
+const RepositorioSaberes = lazy(() => import('./paginas/10-distamesnes-peritajes/06-dimension-social/02-repositorio/RepositorioSaberes'));
+const TestimoniosMemoria = lazy(() => import('./paginas/10-distamesnes-peritajes/06-dimension-social/03-testimonios/TestimoniosMemoria'));
+const ParticipacionSocial = lazy(() => import('./paginas/10-distamesnes-peritajes/06-dimension-social/04-participacion/ParticipacionSocial'));
 
 // ========================================
 // GESTIÓN DE PROYECTOS
@@ -272,7 +274,10 @@ const CrearProyecto = lazy(() => import('./paginas/12-gestion-proyectos/01-admin
 const GestionAPUsCotizaciones = lazy(() => import('./paginas/12-gestion-proyectos/01-administrador/GestionAPUsCotizaciones'));
 const DashboardOperador = lazy(() => import('./paginas/12-gestion-proyectos/02-operador/DashboardOperador'));
 const DashboardCliente = lazy(() => import('./paginas/12-gestion-proyectos/03-cliente/DashboardCliente'));
+const PAE = lazy(() => import('./paginas/12-gestion-proyectos/pae-cae/PAE'));
+const CAE = lazy(() => import('./paginas/12-gestion-proyectos/pae-cae/CAE'));
 const PanelVista = lazy(() => import('./paginas/12-gestion-proyectos/01-administrador/PanelVista'));
+const ServiciosMapasAdmin = lazy(() => import('./paginas/12-gestion-proyectos/01-administrador/ServiciosMapasAdmin'));
 
 
 function App() {
@@ -308,10 +313,29 @@ function App() {
                       {/* ========================================
                           GESTIÓN INSTITUCIONAL
                       ======================================== */}
+                      {/* ========================================
+                          ADMIN - SERVICIOS DE MAPAS
+                          Acceso: adm (3) y adm_gen (4)
+                      ======================================== */}
+                      <Route
+                        path="/admin/servicios-mapas"
+                        element={
+                          <ProtectedRouteWithPermisos requiredRole={'adm'}>
+                            <ErrorBoundary pageName="ServiciosMapasAdmin"><ServiciosMapasAdmin /></ErrorBoundary>
+                          </ProtectedRouteWithPermisos>
+                        }
+                      />
                       <Route path="/institucional" element={<ErrorBoundary pageName="Institucional"><Institucional /></ErrorBoundary>} />
                       <Route path="/proyectos" element={<ErrorBoundary pageName="Proyectos"><Proyectos /></ErrorBoundary>} />
                       <Route path="/donaciones" element={<ErrorBoundary pageName="Donaciones"><Donaciones /></ErrorBoundary>} />
                       <Route path="/dashboard" element={<ErrorBoundary pageName="Dashboard"><Dashboard /></ErrorBoundary>} />
+                      <Route path="/admin/configuracion-sistema" element={
+                        <ErrorBoundary pageName="Configuración del Sistema">
+                          <ProtectedRouteWithPermisos requiredRole={'adm'}>
+                            <ConfiguracionSistema />
+                          </ProtectedRouteWithPermisos>
+                        </ErrorBoundary>
+                      } />
                       
                       {/* ========================================
                           ACCIONES CONSTITUCIONALES
@@ -479,13 +503,19 @@ function App() {
                       {/* ========================================
                           SERVICIOS COMPARTIDOS
                       ======================================== */}
-                      <Route path="/contacto" element={<ErrorBoundary pageName="Contacto"><Contacto /></ErrorBoundary>} />
-                      <Route path="/ayuda" element={<ErrorBoundary pageName="Ayuda"><Ayuda /></ErrorBoundary>} />
-                      <Route path="/documentos" element={<ErrorBoundary pageName="Documentos"><Documentos /></ErrorBoundary>} />
-                      <Route path="/noticias" element={<ErrorBoundary pageName="Noticias"><Noticias /></ErrorBoundary>} />
-                      <Route path="/perfil" element={<ErrorBoundary pageName="Perfil"><Perfil /></ErrorBoundary>} />
-                      <Route path="/terminos" element={<ErrorBoundary pageName="Términos"><Terminos /></ErrorBoundary>} />
-                      <Route path="/convocatorias" element={<ErrorBoundary pageName="Convocatorias"><ConvocatoriasPublicas /></ErrorBoundary>} />
+                      <Route element={<ServiciosCompartidosLayout />}>
+                        <Route path="/contacto" element={<ErrorBoundary pageName="Contacto"><Contacto /></ErrorBoundary>} />
+                        <Route path="/ayuda" element={<ErrorBoundary pageName="Ayuda"><Ayuda /></ErrorBoundary>} />
+                        <Route path="/documentos" element={<ErrorBoundary pageName="Documentos"><Documentos /></ErrorBoundary>} />
+                        <Route path="/noticias" element={<ErrorBoundary pageName="Noticias"><Noticias /></ErrorBoundary>} />
+                        <Route path="/perfil" element={
+                          <ProtectedRouteWithPermisos>
+                            <ErrorBoundary pageName="Perfil"><Perfil /></ErrorBoundary>
+                          </ProtectedRouteWithPermisos>
+                        } />
+                        <Route path="/terminos" element={<ErrorBoundary pageName="Términos"><Terminos /></ErrorBoundary>} />
+                        <Route path="/convocatorias" element={<ErrorBoundary pageName="Convocatorias"><ConvocatoriasPublicas /></ErrorBoundary>} />
+                      </Route>
                       
                       {/* ========================================
                           GESTIÓN DE PROYECTOS - PROTEGIDAS
@@ -510,6 +540,20 @@ function App() {
                         <ErrorBoundary pageName="Dashboard Administrador">
                           <ProtectedRouteWithPermisos requiredRole="adm" requiredPage="Dashboard Administrador">
                             <DashboardAdministrador />
+                          </ProtectedRouteWithPermisos>
+                        </ErrorBoundary>
+                      } />
+                      <Route path="/pae" element={
+                        <ErrorBoundary pageName="PAE - Gestión">
+                          <ProtectedRouteWithPermisos requiredRole="adm" requiredPage="PAE">
+                            <PAE />
+                          </ProtectedRouteWithPermisos>
+                        </ErrorBoundary>
+                      } />
+                      <Route path="/cae" element={
+                        <ErrorBoundary pageName="CAE - Comité de Alimentación Escolar">
+                          <ProtectedRouteWithPermisos requiredRole="adm" requiredPage="CAE">
+                            <CAE />
                           </ProtectedRouteWithPermisos>
                         </ErrorBoundary>
                       } />
@@ -549,7 +593,7 @@ function App() {
                       {/* Panel de Vista - Niveles 3 y 4 (Administrador y Administrador General) */}
                       <Route path="/panel-vista" element={
                         <ErrorBoundary pageName="Panel de Vista">
-                          <ProtectedRouteWithPermisos requiredRole="adm" requiredPage="Panel de Vista">
+                          <ProtectedRouteWithPermisos requiredRole="adm_gen">
                             <PanelVista />
                           </ProtectedRouteWithPermisos>
                         </ErrorBoundary>

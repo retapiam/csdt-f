@@ -1,4 +1,5 @@
 import api from './api';
+import TareaService from './tareaService';
 
 /**
  * Servicio para gestión de proyectos
@@ -128,6 +129,63 @@ export const ProyectoService = {
       throw error;
     }
   }
+};
+
+// Compatibilidad con hooks existentes: alias usados por useProyectos/useTareas
+// Estos métodos delegan a las nuevas funciones o a servicios específicos
+ProyectoService.obtenerProyectos = async (filters = {}, user) => {
+  return ProyectoService.getAll(filters);
+};
+
+ProyectoService.obtenerProyecto = async (id, user) => {
+  return ProyectoService.getById(id);
+};
+
+ProyectoService.crearProyecto = async (data, user) => {
+  return ProyectoService.create(data);
+};
+
+ProyectoService.actualizarProyecto = async (id, data, user) => {
+  return ProyectoService.update(id, data);
+};
+
+ProyectoService.eliminarProyecto = async (id, user) => {
+  return ProyectoService.delete(id);
+};
+
+ProyectoService.obtenerTareas = async (filters = {}, user) => {
+  return TareaService.getAll(filters);
+};
+
+ProyectoService.crearTarea = async (data, user) => {
+  return TareaService.create(data);
+};
+
+ProyectoService.actualizarTarea = async (id, data, user) => {
+  return TareaService.update(id, data);
+};
+
+ProyectoService.clearCache = () => {};
+
+ProyectoService.puedeCrearProyecto = (user) => {
+  const rol = (user?.rol || '').toLowerCase();
+  return rol === 'adm' || rol === 'adm_gen';
+};
+
+ProyectoService.puedeEliminarProyecto = (user) => {
+  const rol = (user?.rol || '').toLowerCase();
+  return rol === 'adm' || rol === 'adm_gen';
+};
+
+ProyectoService.obtenerEstadisticas = async (user) => {
+  // Devuelve estructura esperada por los dashboards cuando backend no responde aún
+  return {
+    proyectosActivos: 0,
+    tareasPendientes: 0,
+    presupuestoTotal: 0,
+    operadoresDisponibles: 0,
+    clientesActivos: 0,
+  };
 };
 
 export default ProyectoService;

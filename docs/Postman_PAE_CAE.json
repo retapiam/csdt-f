@@ -1,0 +1,140 @@
+{
+  "info": {
+    "name": "CSDT - PAE/CAE/Alertas/PDF",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección de smoke tests para backend: salud, PAE, CAE, alertas y PDFs"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/health",
+          "host": ["{{base_url}}"],
+          "path": ["api", "health"]
+        }
+      }
+    },
+    {
+      "name": "Admin - Estado del sistema",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{token}}"}
+        ],
+        "url": {"raw": "{{base_url}}/api/admin/sistema/estado", "host": ["{{base_url}}"], "path": ["api","admin","sistema","estado"]}
+      }
+    },
+    {
+      "name": "Alertas - Listar",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/alertas", "host": ["{{base_url}}"], "path": ["api","alertas"]}
+      }
+    },
+    {
+      "name": "Alertas - Generar tempranas",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/admin/sistema/generar-alertas", "host": ["{{base_url}}"], "path": ["api","admin","sistema","generar-alertas"]}
+      }
+    },
+    {
+      "name": "PAE - Instituciones (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pae/instituciones", "host": ["{{base_url}}"], "path": ["api","pae","instituciones"]}
+      }
+    },
+    {
+      "name": "PAE - Menús (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pae/menus", "host": ["{{base_url}}"], "path": ["api","pae","menus"]}
+      }
+    },
+    {
+      "name": "PAE - Entregas (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pae/entregas", "host": ["{{base_url}}"], "path": ["api","pae","entregas"]}
+      }
+    },
+    {
+      "name": "PAE - Incidencias (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pae/incidencias", "host": ["{{base_url}}"], "path": ["api","pae","incidencias"]}
+      }
+    },
+    {
+      "name": "CAE - Comités (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/cae/comites", "host": ["{{base_url}}"], "path": ["api","cae","comites"]}
+      }
+    },
+    {
+      "name": "CAE - Actas (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/cae/actas", "host": ["{{base_url}}"], "path": ["api","cae","actas"]}
+      }
+    },
+    {
+      "name": "CAE - Seguimientos (GET)",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/cae/seguimientos", "host": ["{{base_url}}"], "path": ["api","cae","seguimientos"]}
+      }
+    },
+    {
+      "name": "PDF - Proyecto",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pdf/proyecto/1", "host": ["{{base_url}}"], "path": ["api","pdf","proyecto","1"]}
+      }
+    },
+    {
+      "name": "PDF - Acta CAE",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pdf/acta-cae/1", "host": ["{{base_url}}"], "path": ["api","pdf","acta-cae","1"]}
+      }
+    },
+    {
+      "name": "PDF - Denuncia",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pdf/denuncia/1", "host": ["{{base_url}}"], "path": ["api","pdf","denuncia","1"]}
+      }
+    },
+    {
+      "name": "PDF - Hallazgos",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/pdf/hallazgos/1", "host": ["{{base_url}}"], "path": ["api","pdf","hallazgos","1"]}
+      }
+    }
+  ],
+  "variable": [
+    {"key": "base_url", "value": "http://localhost:8000"},
+    {"key": "token", "value": ""}
+  ]
+}
+
+

@@ -13,6 +13,11 @@ const ProtectedRouteWithPermisos = ({
   const { user, isAuthenticated } = useAuth();
   const { puedeVer, puedeEditar, puedeModificar } = usePermisosVista();
 
+  // Acceso total para Administrador General (rol 4)
+  if (user && user.rol === 'adm_gen') {
+    return children;
+  }
+
   // Verificar autenticación básica
   if (!isAuthenticated()) {
     return <Navigate to="/" replace />;

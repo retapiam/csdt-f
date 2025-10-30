@@ -87,13 +87,13 @@ export const SyncDataProvider = ({ children }) => {
     };
   }, [isInitialized, syncCompleto]);
 
-  // Sincronización periódica cada 5 minutos
+  // Sincronización periódica cada 30 minutos
   useEffect(() => {
     if (!isInitialized || !syncStatus.isOnline) return;
 
     const interval = setInterval(() => {
       syncCompleto().catch(console.error);
-    }, 5 * 60 * 1000); // 5 minutos
+    }, 30 * 60 * 1000); // 30 minutos
 
     return () => clearInterval(interval);
   }, [isInitialized, syncStatus.isOnline, syncCompleto]);

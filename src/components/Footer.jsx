@@ -1,4 +1,5 @@
 import React from 'react';
+import BotonProbarConexion from './compartidas/BotonProbarConexion.jsx';
 
 const Footer = () => {
   return (
@@ -76,6 +77,9 @@ const Footer = () => {
           opacity: 0.6
         }}>
           <p>&copy; 2024 CSDT - Consejo Social de Veeduría y Desarrollo Territorial. Todos los derechos reservados.</p>
+          <div style={{ marginTop: 8, display: 'flex', justifyContent: 'center' }}>
+            <BotonProbarConexion />
+          </div>
         </div>
       </div>
     </footer>

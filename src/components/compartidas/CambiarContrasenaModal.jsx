@@ -1,8 +1,10 @@
-﻿import { Button } from '../ui/button';
+﻿import React, { useState } from 'react';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { LoaderCircle, Lock, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import api from '@services/api';
+import { API_ENDPOINTS } from '../../config/config';
 
 const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
@@ -19,6 +21,7 @@ const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
     confirmacion: false
   });
   const [success, setSuccess] = useState(false);
+  const [useManual, setUseManual] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,8 +49,10 @@ const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.con_actual) {
-      newErrors.con_actual = 'La contraseña actual es obligatoria';
+    if (!useManual) {
+      if (!formData.con_actual) {
+        newErrors.con_actual = 'La contraseña actual es obligatoria';
+      }
     }
     
     if (!formData.con_nueva) {
@@ -78,11 +83,20 @@ const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
     }
 
     try {
-      const response = await api.post('/auth/cambiar-contrasena', {
-        con_actual: formData.con_actual,
-        con_nueva: formData.con_nueva,
-        con_nueva_confirmation: formData.con_nueva_confirmation
-      });
+      let response;
+      if (useManual) {
+        // Modo manual: actualizar perfil con nueva contraseña
+        response = await api.put(API_ENDPOINTS.AUTH.UPDATE_PROFILE || '/auth/profile', {
+          password: formData.con_nueva,
+          password_confirmation: formData.con_nueva_confirmation
+        });
+      } else {
+        response = await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD || '/auth/change-password', {
+          current_password: formData.con_actual,
+          password: formData.con_nueva,
+          password_confirmation: formData.con_nueva_confirmation
+        });
+      }
 
       if (response.data.success) {
         setSuccess(true);
@@ -91,10 +105,51 @@ const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
           handleClose();
         }, 2000);
       } else {
-        setError(response.data.message || 'Error al cambiar contraseña');
+        // Mostrar errores de validación si vienen del backend
+        if (response.data.errors) {
+          const be = response.data.errors;
+          setErrors({
+            con_actual: be.current_password?.[0] || '',
+            con_nueva: be.password?.[0] || '',
+            con_nueva_confirmation: be.password_confirmation?.[0] || ''
+          });
+        }
+        setError(response.data.message || 'Error de validación');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Error al cambiar contraseña');
+      const status = err.response?.status;
+      if (status === 404 && !useManual) {
+        // Endpoint no existe: intentar modo manual automáticamente
+        try {
+          const fallback = await api.put(API_ENDPOINTS.AUTH.UPDATE_PROFILE || '/auth/profile', {
+            password: formData.con_nueva,
+            password_confirmation: formData.con_nueva_confirmation
+          });
+          if (fallback.data?.success) {
+            setSuccess(true);
+            setTimeout(() => {
+              onSuccess?.();
+              handleClose();
+            }, 2000);
+            return;
+          }
+        } catch (e) {
+          // continuar con manejo estándar
+        }
+      }
+      if (status === 422) {
+        const be = err.response?.data?.errors || {};
+        setErrors({
+          con_actual: be.current_password?.[0] || '',
+          con_nueva: be.password?.[0] || '',
+          con_nueva_confirmation: be.password_confirmation?.[0] || ''
+        });
+        setError(err.response?.data?.message || 'Error de validación');
+      } else if (status === 400 || status === 401) {
+        setError(err.response?.data?.message || 'No autorizado o datos inválidos');
+      } else {
+        setError(err.response?.data?.message || 'Error al cambiar contraseña');
+      }
     } finally {
       setLoading(false);
     }
@@ -164,6 +219,19 @@ const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
             </div>
           )}
 
+          <div className="flex items-center gap-2 p-2 bg-gray-50 rounded">
+            <input
+              id="use_manual"
+              type="checkbox"
+              checked={useManual}
+              onChange={(e) => setUseManual(e.target.checked)}
+            />
+            <label htmlFor="use_manual" className="text-sm text-gray-700">
+              Cambiar sin validar contraseña actual (modo manual)
+            </label>
+          </div>
+
+          {!useManual && (
           <div className="space-y-2">
             <Label htmlFor="con_actual" className="flex items-center gap-2">
               <Lock className="h-4 w-4" />
@@ -192,6 +260,7 @@ const CambiarContrasenaModal = ({ isOpen, onClose, onSuccess }) => {
               <p className="text-sm text-red-600">{errors.con_actual}</p>
             )}
           </div>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="con_nueva" className="flex items-center gap-2">

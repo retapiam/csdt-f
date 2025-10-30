@@ -21,7 +21,7 @@ const ModalRegistroCliente = ({ onClose, onSuccess, onCambiarLogin }) => {
     { value: 'cc', label: 'Cédula de Ciudadanía' },
     { value: 'ce', label: 'Cédula de Extranjería' },
     { value: 'ti', label: 'Tarjeta de Identidad' },
-    { value: 'pp', label: 'Pasaporte' },
+    { value: 'pasaporte', label: 'Pasaporte' },
     { value: 'nit', label: 'NIT' }
   ];
 

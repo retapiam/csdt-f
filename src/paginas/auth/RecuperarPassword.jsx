@@ -24,6 +24,12 @@ const RecuperarPassword = () => {
 
         {/* Formulario de Recuperar Password */}
         <FormularioRecuperarPassword />
+
+        {/* Acceso directo a iniciar sesión si el usuario recuerda su clave */}
+        <div className="text-center text-sm text-gray-600">
+          ¿Ya recuerdas tu contraseña?{' '}
+          <a href="/login" className="text-blue-600 hover:underline">Inicia sesión</a>
+        </div>
       </div>
     </div>
   );

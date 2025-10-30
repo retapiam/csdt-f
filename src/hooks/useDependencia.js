@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import DependenciaService from '../services/DependenciaService';
 import toast from 'react-hot-toast';
 
@@ -10,6 +12,8 @@ export const useDependencia = () => {
   const [generando, setGenerando] = useState(false);
   const [actividadCreada, setActividadCreada] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   /**
    * Generar dependencia completa
@@ -17,6 +21,13 @@ export const useDependencia = () => {
    * @returns {Promise<Object>} Resultado
    */
   const generarDependencia = useCallback(async (datos) => {
+    // Requiere autenticación para generar dependencias
+    if (!isAuthenticated()) {
+      toast.error('Debes iniciar sesión para generar dependencias');
+      navigate('/login');
+      throw new Error('AUTH_REQUIRED');
+    }
+
     setGenerando(true);
     setError(null);
 
@@ -60,7 +71,7 @@ export const useDependencia = () => {
     } finally {
       setGenerando(false);
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
   /**
    * Generar dependencia rápida (versión simplificada)
@@ -70,6 +81,13 @@ export const useDependencia = () => {
    * @returns {Promise<Object>} Resultado
    */
   const generarDependenciaRapida = useCallback(async (modulo, titulo, datos = {}) => {
+    // Requiere autenticación para generar dependencias
+    if (!isAuthenticated()) {
+      toast.error('Debes iniciar sesión para generar dependencias');
+      navigate('/login');
+      throw new Error('AUTH_REQUIRED');
+    }
+
     setGenerando(true);
     setError(null);
 
@@ -103,7 +121,7 @@ export const useDependencia = () => {
     } finally {
       setGenerando(false);
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
   /**
    * Agregar PDF a actividad existente

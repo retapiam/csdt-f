@@ -39,6 +39,10 @@ import {
 import { useAuth } from '../../../contexts/AuthContext';
 import { usePermisosVista } from '../../../contexts/PermisosVistaContext';
 import { useProyectos, useTareas, useEstadisticasProyectos } from '../../../hooks/useProyectos';
+import { MapProvidersRegistry } from '../../../services/MapProvidersRegistry';
+import apuService from '../../../services/APUService';
+import api from '../../../services/api';
+import pdfAvanzadoService from '../../../services/pdf/PDFAvanzadoService';
 
 const PanelVista = ({ onVolver }) => {
   const { user, canControlTotal, canManageRoles, canManagePermissions, canManageUsers, canAccessPanelVista } = useAuth();
@@ -52,6 +56,14 @@ const PanelVista = ({ onVolver }) => {
     busqueda: ''
   });
   const [vistaActiva, setVistaActiva] = useState('proyectos');
+	const [mapProvidersCount, setMapProvidersCount] = useState(0);
+	const [apusCount, setApusCount] = useState(0);
+  const [alertas, setAlertas] = useState([]);
+  const [cargandoAlertas, setCargandoAlertas] = useState(false);
+  const [errorAlertas, setErrorAlertas] = useState('');
+  const [filtrosAlertas, setFiltrosAlertas] = useState({ estado: '', severidad: '' });
+  const [usuarios, setUsuarios] = useState([]);
+  const [cargandoUsuarios, setCargandoUsuarios] = useState(false);
 
   // Hooks de datos sincronizados
   const { 
@@ -59,19 +71,71 @@ const PanelVista = ({ onVolver }) => {
     loading: cargandoProyectos, 
     error: errorProyectos,
     tienePermisos 
-  } = useProyectos(filtros, { autoSync: true });
+  } = useProyectos(filtros, { autoSync: false });
 
   const { 
     tareas, 
     loading: cargandoTareas, 
     error: errorTareas 
-  } = useTareas(filtros, { autoSync: true });
+  } = useTareas(filtros, { autoSync: false });
 
   const { 
     estadisticas, 
     loading: cargandoEstadisticas, 
     error: errorEstadisticas 
-  } = useEstadisticasProyectos({ autoSync: true });
+  } = useEstadisticasProyectos({ autoSync: false });
+
+	useEffect(() => {
+		try {
+			setMapProvidersCount((MapProvidersRegistry.getAll() || []).length);
+		} catch (e) {
+			setMapProvidersCount(0);
+		}
+
+		try {
+			setApusCount(apuService.count());
+		} catch (e) {
+			setApusCount(0);
+		}
+	}, []);
+
+  useEffect(() => {
+    const cargarAlertas = async () => {
+      try {
+        setCargandoAlertas(true);
+        setErrorAlertas('');
+        const resp = await api.get('/alertas', { params: {
+          estado: filtrosAlertas.estado || undefined,
+          severidad: filtrosAlertas.severidad || undefined
+        }});
+        // Soportar paginator de Laravel o arreglo directo
+        const data = resp.data?.data;
+        const lista = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
+        setAlertas(lista);
+      } catch (e) {
+        setErrorAlertas('Error al cargar alertas');
+      } finally {
+        setCargandoAlertas(false);
+      }
+    };
+    cargarAlertas();
+  }, [filtrosAlertas]);
+
+  useEffect(() => {
+    const cargarUsuarios = async () => {
+      try {
+        setCargandoUsuarios(true);
+        const resp = await api.get('/users');
+        const lista = Array.isArray(resp.data) ? resp.data : (Array.isArray(resp.data?.data) ? resp.data.data : []);
+        setUsuarios(lista);
+      } catch (_) {
+        setUsuarios([]);
+      } finally {
+        setCargandoUsuarios(false);
+      }
+    };
+    cargarUsuarios();
+  }, []);
 
   // Verificar autenticación y permisos de acceso
   if (!user) {
@@ -199,6 +263,34 @@ const PanelVista = ({ onVolver }) => {
           </div>
         </CardContent>
       </Card>
+    
+	<Card>
+		<CardContent className="p-6">
+			<div className="flex items-center">
+				<div className="p-2 bg-indigo-100 rounded-lg">
+					<Settings className="h-6 w-6 text-indigo-600" />
+				</div>
+				<div className="ml-4">
+					<p className="text-sm font-medium text-gray-600">Servicios de Mapas</p>
+					<p className="text-2xl font-bold text-gray-900">{mapProvidersCount}</p>
+				</div>
+			</div>
+		</CardContent>
+	</Card>
+
+	<Card>
+		<CardContent className="p-6">
+			<div className="flex items-center">
+				<div className="p-2 bg-green-100 rounded-lg">
+					<CheckCircle className="h-6 w-6 text-green-600" />
+				</div>
+				<div className="ml-4">
+					<p className="text-sm font-medium text-gray-600">APUs Registrados</p>
+					<p className="text-2xl font-bold text-gray-900">{apusCount}</p>
+				</div>
+			</div>
+		</CardContent>
+	</Card>
 
       <Card>
         <CardContent className="p-6">
@@ -512,6 +604,187 @@ const PanelVista = ({ onVolver }) => {
     </div>
   );
 
+  const renderAlertasFiltros = () => (
+    <Card className="mb-4">
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Filter className="h-5 w-5 mr-2" />
+          Filtros de Alertas
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+            <select
+              value={filtrosAlertas.estado}
+              onChange={(e) => setFiltrosAlertas({ ...filtrosAlertas, estado: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Todos</option>
+              <option value="abierta">Abierta</option>
+              <option value="cerrada">Cerrada</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Severidad</label>
+            <select
+              value={filtrosAlertas.severidad}
+              onChange={(e) => setFiltrosAlertas({ ...filtrosAlertas, severidad: e.target.value })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">Todas</option>
+              <option value="baja">Baja</option>
+              <option value="media">Media</option>
+              <option value="alta">Alta</option>
+              <option value="critica">Crítica</option>
+            </select>
+          </div>
+          <div className="flex items-end">
+            <Button variant="outline" onClick={() => setFiltrosAlertas({ estado: '', severidad: '' })}>Limpiar</Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const renderAlertas = () => (
+    <div className="space-y-4">
+      {renderAlertasFiltros()}
+      {(() => {
+        const abiertas = alertas.filter(a => (a.estado || 'abierta') === 'abierta');
+        const countBy = (sev) => abiertas.filter(a => (a.severidad || 'media') === sev).length;
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <Card><CardContent className="p-4"><div className="flex items-center justify-between"><div><p className="text-sm text-gray-600">Alertas Abiertas</p><p className="text-2xl font-bold">{abiertas.length}</p></div><AlertTriangle className="h-6 w-6 text-red-500"/></div></CardContent></Card>
+            <Card><CardContent className="p-4"><div className="flex items-center justify-between"><div><p className="text-sm text-gray-600">Críticas</p><p className="text-2xl font-bold">{countBy('critica')}</p></div><AlertTriangle className="h-6 w-6 text-red-600"/></div></CardContent></Card>
+            <Card><CardContent className="p-4"><div className="flex items-center justify-between"><div><p className="text-sm text-gray-600">Alta</p><p className="text-2xl font-bold">{countBy('alta')}</p></div><AlertTriangle className="h-6 w-6 text-orange-500"/></div></CardContent></Card>
+            <Card><CardContent className="p-4"><div className="flex items-center justify-between"><div><p className="text-sm text-gray-600">Media/Baja</p><p className="text-2xl font-bold">{countBy('media') + countBy('baja')}</p></div><AlertTriangle className="h-6 w-6 text-yellow-500"/></div></CardContent></Card>
+          </div>
+        );
+      })()}
+      <div className="flex justify-end gap-2">
+        <Button variant="outline" onClick={async () => {
+          try {
+            const rows = alertas.map(a => ({
+              id: a.id,
+              tipo: a.tipo,
+              severidad: a.severidad,
+              estado: a.estado,
+              mensaje: (a.mensaje || '').replace(/\n/g,' '),
+              created_at: a.created_at,
+              sla_at: a.sla_at || ''
+            }));
+            const header = Object.keys(rows[0] || { id: '', tipo: '', severidad: '', estado: '', mensaje: '', created_at: '', sla_at: '' });
+            const csv = [header.join(','), ...rows.map(r => header.map(h => `"${(r[h] ?? '').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'alertas.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+          } catch (_) {}
+        }}>Exportar CSV</Button>
+        <Button variant="outline" onClick={async () => {
+          try {
+            const datos = { titulo: 'Reporte de Alertas', resumen: 'Listado de alertas del sistema', puntos_clave: [], recomendaciones: [] };
+            const pdf = await pdfAvanzadoService.generarPDFAvanzado(datos, { plantilla: 'resumen_ejecutivo', estilo: 'oficial' });
+            // Añadir tabla simple usando autoTable vía método ya usado por el servicio en secciones IA
+            // Como alternativa, agregamos líneas básicas
+            pdf.archivo.documento.text('Listado:', 20, 80);
+            let y = 90; const doc = pdf.archivo.documento;
+            alertas.slice(0, 50).forEach(a => {
+              const line = `#${a.id} ${a.tipo || ''} | ${a.severidad || ''} | ${a.estado || ''} | ${a.mensaje || ''}`;
+              doc.text(line.substring(0, 110), 20, y); y += 6; if (y > 270) { doc.addPage(); y = 30; }
+            });
+            pdf.archivo.documento.save('alertas.pdf');
+          } catch (_) {}
+        }}>Exportar PDF</Button>
+      </div>
+      {cargandoAlertas ? (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-2 text-gray-600">Cargando alertas...</p>
+        </div>
+      ) : errorAlertas ? (
+        <Alert>
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            {errorAlertas}
+          </AlertDescription>
+        </Alert>
+      ) : alertas.length === 0 ? (
+        <div className="text-center py-8">
+          <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <p className="text-gray-600">No se encontraron alertas</p>
+        </div>
+      ) : (
+        alertas.map((alerta) => (
+          <Card key={alerta.id} className="hover:shadow-md transition-shadow">
+            <CardContent className="p-4">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <h4 className="font-semibold text-gray-900">
+                      {alerta.tipo?.replace('_',' ') || 'Alerta'}
+                    </h4>
+                    <Badge className={getPrioridadColor(alerta.severidad || 'media')}>
+                      {String(alerta.severidad || 'media').toUpperCase()}
+                    </Badge>
+                    <Badge className={getEstadoColor(alerta.estado || 'abierta')}>
+                      {String(alerta.estado || 'abierta').toUpperCase()}
+                    </Badge>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-2">{alerta.mensaje}</p>
+                  <div className="text-xs text-gray-500">
+                    Creada: {formatearFecha(alerta.created_at)} {alerta.sla_at ? `· SLA: ${formatearFecha(alerta.sla_at)}` : ''}
+                  </div>
+                </div>
+                <div className="flex flex-col space-y-2 ml-4">
+                  <Button size="sm" variant="outline" onClick={async () => {
+                    try {
+                      await api.put(`/alertas/${alerta.id}`, { estado: 'cerrada' });
+                      setAlertas(prev => prev.map(a => a.id === alerta.id ? { ...a, estado: 'cerrada' } : a));
+                    } catch (_) {}
+                  }}>
+                    <CheckCircle className="h-4 w-4 mr-1" />
+                    Cerrar
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={async () => {
+                    const sla = window.prompt('Nueva fecha SLA (YYYY-MM-DD)');
+                    if (!sla) return;
+                    try {
+                      await api.put(`/alertas/${alerta.id}`, { sla_at: sla });
+                      setAlertas(prev => prev.map(a => a.id === alerta.id ? { ...a, sla_at: sla } : a));
+                    } catch (_) {}
+                  }}>
+                    <Clock className="h-4 w-4 mr-1" />
+                    SLA
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={async () => {
+                    if (cargandoUsuarios || usuarios.length === 0) {
+                      alert('Lista de usuarios no disponible');
+                      return;
+                    }
+                    const lista = usuarios.slice(0, 10).map(u => `${u.id}:${u.name || u.nombre}`).join(', ');
+                    const input = window.prompt(`Asignar responsable (ID). Ej: ${lista}`);
+                    const idNum = parseInt(input, 10);
+                    if (!idNum) return;
+                    try {
+                      await api.put(`/alertas/${alerta.id}`, { asignado_a: idNum });
+                      setAlertas(prev => prev.map(a => a.id === alerta.id ? { ...a, asignado_a: idNum } : a));
+                    } catch (_) {}
+                  }}>
+                    <Users className="h-4 w-4 mr-1" />
+                    Asignar
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))
+      )}
+    </div>
+  );
+
   // Función para renderizar la gestión de permisos y roles
   const renderGestionPermisos = () => {
     const rolesSistema = {
@@ -732,18 +1005,22 @@ const PanelVista = ({ onVolver }) => {
 
         {/* Contenido Principal */}
         <Tabs value={vistaActiva} onValueChange={setVistaActiva} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="proyectos" className="flex items-center">
               <FileText className="h-4 w-4 mr-2" />
               Proyectos ({proyectos.length})
             </TabsTrigger>
             <TabsTrigger value="tareas" className="flex items-center">
               <Target className="h-4 w-4 mr-2" />
-              Tareas ({tareas.length})
+              Colas ({tareas.length})
             </TabsTrigger>
             <TabsTrigger value="permisos" className="flex items-center">
               <Shield className="h-4 w-4 mr-2" />
               Permisos & Roles
+            </TabsTrigger>
+            <TabsTrigger value="alertas" className="flex items-center">
+              <AlertTriangle className="h-4 w-4 mr-2" />
+              Alertas ({alertas.length})
             </TabsTrigger>
           </TabsList>
 
@@ -757,6 +1034,9 @@ const PanelVista = ({ onVolver }) => {
 
           <TabsContent value="permisos" className="mt-6">
             {renderGestionPermisos()}
+          </TabsContent>
+          <TabsContent value="alertas" className="mt-6">
+            {renderAlertas()}
           </TabsContent>
         </Tabs>
       </div>

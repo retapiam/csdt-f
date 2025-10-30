@@ -129,14 +129,14 @@ const DashboardUnificado = ({ modoSoloLectura = false, permisos = {} }) => {
     loading: cargandoProyectos, 
     error: errorProyectos,
     refresh: refreshProyectos
-  } = useProyectos({}, { autoSync: true });
+  } = useProyectos({}, { autoSync: false });
 
   const { 
     estadisticas, 
     loading: cargandoEstadisticas, 
     error: errorEstadisticas,
     refresh: refreshEstadisticas
-  } = useEstadisticasProyectos({ autoSync: true });
+  } = useEstadisticasProyectos({ autoSync: false });
 
   const [alertas, setAlertas] = useState([]);
   const [metricasTiempo, setMetricasTiempo] = useState([]);
